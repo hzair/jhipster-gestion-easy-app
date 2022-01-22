@@ -1,0 +1,51 @@
+enum Fonction {
+    VENDEUR, LIVREUR, MANAGEUR
+}
+
+entity Produit {
+	id String,
+    idFonc String,
+    idFournisseur String,
+    nom String,
+    description String,
+    quantite Integer,
+    image String,
+    dateExpiration Instant
+}
+
+entity Employee {
+	id String,
+    matricule String,
+    fonction Fonction,
+	nom String,
+	prenom String,
+	email String,
+	phoneNumber String,
+	dateEmbauche Instant,
+	salaire Long,
+	commissionPct Long
+}
+
+entity Imputation {
+	id String,
+    date Instant    
+}
+
+relationship OneToMany {
+	Imputation to Produit,
+    Imputation to Employee
+}
+
+
+// Set pagination options
+paginate Employee with infinite-scroll
+paginate Poduit with pagination
+
+// Use Data Transfer Objects (DTO)
+// dto * with mapstruct
+
+// Set service options to all except few
+service all with serviceImpl except Employee, Job
+
+// Set an angular suffix
+// angularSuffix * with mySuffix
