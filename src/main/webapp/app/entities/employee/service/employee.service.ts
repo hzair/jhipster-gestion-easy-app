@@ -28,18 +28,18 @@ export class EmployeeService {
   update(employee: IEmployee): Observable<EntityResponseType> {
     const copy = this.convertDateFromClient(employee);
     return this.http
-      .put<IEmployee>(`${this.resourceUrl}/${getEmployeeIdentifier(employee) as number}`, copy, { observe: 'response' })
+      .put<IEmployee>(`${this.resourceUrl}/${getEmployeeIdentifier(employee) as string}`, copy, { observe: 'response' })
       .pipe(map((res: EntityResponseType) => this.convertDateFromServer(res)));
   }
 
   partialUpdate(employee: IEmployee): Observable<EntityResponseType> {
     const copy = this.convertDateFromClient(employee);
     return this.http
-      .patch<IEmployee>(`${this.resourceUrl}/${getEmployeeIdentifier(employee) as number}`, copy, { observe: 'response' })
+      .patch<IEmployee>(`${this.resourceUrl}/${getEmployeeIdentifier(employee) as string}`, copy, { observe: 'response' })
       .pipe(map((res: EntityResponseType) => this.convertDateFromServer(res)));
   }
 
-  find(id: number): Observable<EntityResponseType> {
+  find(id: string): Observable<EntityResponseType> {
     return this.http
       .get<IEmployee>(`${this.resourceUrl}/${id}`, { observe: 'response' })
       .pipe(map((res: EntityResponseType) => this.convertDateFromServer(res)));
@@ -52,7 +52,7 @@ export class EmployeeService {
       .pipe(map((res: EntityArrayResponseType) => this.convertDateArrayFromServer(res)));
   }
 
-  delete(id: number): Observable<HttpResponse<{}>> {
+  delete(id: string): Observable<HttpResponse<{}>> {
     return this.http.delete(`${this.resourceUrl}/${id}`, { observe: 'response' });
   }
 
@@ -75,13 +75,13 @@ export class EmployeeService {
 
   protected convertDateFromClient(employee: IEmployee): IEmployee {
     return Object.assign({}, employee, {
-      hireDate: employee.hireDate?.isValid() ? employee.hireDate.toJSON() : undefined,
+      dateEmbauche: employee.dateEmbauche?.isValid() ? employee.dateEmbauche.toJSON() : undefined,
     });
   }
 
   protected convertDateFromServer(res: EntityResponseType): EntityResponseType {
     if (res.body) {
-      res.body.hireDate = res.body.hireDate ? dayjs(res.body.hireDate) : undefined;
+      res.body.dateEmbauche = res.body.dateEmbauche ? dayjs(res.body.dateEmbauche) : undefined;
     }
     return res;
   }
@@ -89,7 +89,7 @@ export class EmployeeService {
   protected convertDateArrayFromServer(res: EntityArrayResponseType): EntityArrayResponseType {
     if (res.body) {
       res.body.forEach((employee: IEmployee) => {
-        employee.hireDate = employee.hireDate ? dayjs(employee.hireDate) : undefined;
+        employee.dateEmbauche = employee.dateEmbauche ? dayjs(employee.dateEmbauche) : undefined;
       });
     }
     return res;

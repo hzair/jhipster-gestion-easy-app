@@ -48,8 +48,8 @@
           <th scope="col" jhiSortBy="department.id">
             <span jhiTranslate="gestionEasyApp.jobHistory.department">Department</span> <fa-icon icon="sort"></fa-icon>
           </th>
-          <th scope="col" jhiSortBy="employee.id">
-            <span jhiTranslate="gestionEasyApp.jobHistory.employee">Employee</span> <fa-icon icon="sort"></fa-icon>
+          <th scope="col" jhiSortBy="employee2.id">
+            <span jhiTranslate="gestionEasyApp.jobHistory.employee2">Employee 2</span> <fa-icon icon="sort"></fa-icon>
           </th>
           <th scope="col"></th>
         </tr>
@@ -73,8 +73,8 @@
             </div>
           </td>
           <td>
-            <div *ngIf="jobHistory.employee">
-              <a [routerLink]="['/employee', jobHistory.employee?.id, 'view']">{{ jobHistory.employee?.id }}</a>
+            <div *ngIf="jobHistory.employee2">
+              <a [routerLink]="['/employee', jobHistory.employee2?.id, 'view']">{{ jobHistory.employee2?.id }}</a>
             </div>
           </td>
           <td class="text-right">

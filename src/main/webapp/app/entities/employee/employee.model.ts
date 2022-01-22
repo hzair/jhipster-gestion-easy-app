@@ -1,37 +1,36 @@
 import dayjs from 'dayjs/esm';
-import { IJob } from 'app/entities/job/job.model';
-import { IDepartment } from 'app/entities/department/department.model';
+import { Fonction } from 'app/entities/enumerations/fonction.model';
 
 export interface IEmployee {
-  id?: number;
-  firstName?: string | null;
-  lastName?: string | null;
+  id?: string;
+  matricule?: string | null;
+  fonction?: Fonction | null;
+  nom?: string | null;
+  prenom?: string | null;
   email?: string | null;
   phoneNumber?: string | null;
-  hireDate?: dayjs.Dayjs | null;
-  salary?: number | null;
+  dateEmbauche?: dayjs.Dayjs | null;
+  salaire?: number | null;
   commissionPct?: number | null;
-  jobs?: IJob[] | null;
   manager?: IEmployee | null;
-  department?: IDepartment | null;
 }
 
 export class Employee implements IEmployee {
   constructor(
-    public id?: number,
-    public firstName?: string | null,
-    public lastName?: string | null,
+    public id?: string,
+    public matricule?: string | null,
+    public fonction?: Fonction | null,
+    public nom?: string | null,
+    public prenom?: string | null,
     public email?: string | null,
     public phoneNumber?: string | null,
-    public hireDate?: dayjs.Dayjs | null,
-    public salary?: number | null,
+    public dateEmbauche?: dayjs.Dayjs | null,
+    public salaire?: number | null,
     public commissionPct?: number | null,
-    public jobs?: IJob[] | null,
-    public manager?: IEmployee | null,
-    public department?: IDepartment | null
+    public manager?: IEmployee | null
   ) {}
 }
 
-export function getEmployeeIdentifier(employee: IEmployee): number | undefined {
+export function getEmployeeIdentifier(employee: IEmployee): string | undefined {
   return employee.id;
 }

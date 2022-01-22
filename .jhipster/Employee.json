@@ -2,12 +2,24 @@
   "name": "Employee",
   "fields": [
     {
-      "fieldName": "firstName",
-      "fieldType": "String",
-      "javadoc": "The firstname attribute."
+      "fieldName": "id",
+      "fieldType": "String"
     },
     {
-      "fieldName": "lastName",
+      "fieldName": "matricule",
+      "fieldType": "String"
+    },
+    {
+      "fieldName": "fonction",
+      "fieldType": "Fonction",
+      "fieldValues": "ADMIN,LIVREUR,MANAGER"
+    },
+    {
+      "fieldName": "nom",
+      "fieldType": "String"
+    },
+    {
+      "fieldName": "prenom",
       "fieldType": "String"
     },
     {
@@ -19,11 +31,11 @@
       "fieldType": "String"
     },
     {
-      "fieldName": "hireDate",
+      "fieldName": "dateEmbauche",
       "fieldType": "Instant"
     },
     {
-      "fieldName": "salary",
+      "fieldName": "salaire",
       "fieldType": "Long"
     },
     {
@@ -33,26 +45,12 @@
   ],
   "relationships": [
     {
-      "relationshipType": "one-to-many",
-      "otherEntityName": "job",
-      "otherEntityRelationshipName": "employee",
-      "relationshipName": "job"
-    },
-    {
       "relationshipType": "many-to-one",
       "otherEntityName": "employee",
       "otherEntityRelationshipName": "employee",
       "relationshipName": "manager"
-    },
-    {
-      "relationshipType": "many-to-one",
-      "otherEntityName": "department",
-      "otherEntityRelationshipName": "employee",
-      "javadoc": "Another side of the same relationship",
-      "relationshipName": "department"
     }
   ],
-  "javadoc": "The Employee entity.",
   "entityTableName": "employee",
   "dto": "no",
   "pagination": "infinite-scroll",

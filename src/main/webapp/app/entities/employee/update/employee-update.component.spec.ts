@@ -8,8 +8,6 @@ import { of, Subject, from } from 'rxjs';
 
 import { EmployeeService } from '../service/employee.service';
 import { IEmployee, Employee } from '../employee.model';
-import { IDepartment } from 'app/entities/department/department.model';
-import { DepartmentService } from 'app/entities/department/service/department.service';
 
 import { EmployeeUpdateComponent } from './employee-update.component';
 
@@ -18,7 +16,6 @@ describe('Employee Management Update Component', () => {
   let fixture: ComponentFixture<EmployeeUpdateComponent>;
   let activatedRoute: ActivatedRoute;
   let employeeService: EmployeeService;
-  let departmentService: DepartmentService;
 
   beforeEach(() => {
     TestBed.configureTestingModule({
@@ -40,18 +37,17 @@ describe('Employee Management Update Component', () => {
     fixture = TestBed.createComponent(EmployeeUpdateComponent);
     activatedRoute = TestBed.inject(ActivatedRoute);
     employeeService = TestBed.inject(EmployeeService);
-    departmentService = TestBed.inject(DepartmentService);
 
     comp = fixture.componentInstance;
   });
 
   describe('ngOnInit', () => {
     it('Should call Employee query and add missing value', () => {
-      const employee: IEmployee = { id: 456 };
-      const manager: IEmployee = { id: 4374 };
+      const employee: IEmployee = { id: 'CBA' };
+      const manager: IEmployee = { id: '01cbf1bb-cd4a-4879-a29d-36e93f70dc33' };
       employee.manager = manager;
 
-      const employeeCollection: IEmployee[] = [{ id: 10177 }];
+      const employeeCollection: IEmployee[] = [{ id: 'a641269e-02be-45cc-9b3e-81010e025c8a' }];
       jest.spyOn(employeeService, 'query').mockReturnValue(of(new HttpResponse({ body: employeeCollection })));
       const additionalEmployees = [manager];
       const expectedCollection: IEmployee[] = [...additionalEmployees, ...employeeCollection];
@@ -65,38 +61,16 @@ describe('Employee Management Update Component', () => {
       expect(comp.employeesSharedCollection).toEqual(expectedCollection);
     });
 
-    it('Should call Department query and add missing value', () => {
-      const employee: IEmployee = { id: 456 };
-      const department: IDepartment = { id: 35363 };
-      employee.department = department;
-
-      const departmentCollection: IDepartment[] = [{ id: 78278 }];
-      jest.spyOn(departmentService, 'query').mockReturnValue(of(new HttpResponse({ body: departmentCollection })));
-      const additionalDepartments = [department];
-      const expectedCollection: IDepartment[] = [...additionalDepartments, ...departmentCollection];
-      jest.spyOn(departmentService, 'addDepartmentToCollectionIfMissing').mockReturnValue(expectedCollection);
-
-      activatedRoute.data = of({ employee });
-      comp.ngOnInit();
-
-      expect(departmentService.query).toHaveBeenCalled();
-      expect(departmentService.addDepartmentToCollectionIfMissing).toHaveBeenCalledWith(departmentCollection, ...additionalDepartments);
-      expect(comp.departmentsSharedCollection).toEqual(expectedCollection);
-    });
-
     it('Should update editForm', () => {
-      const employee: IEmployee = { id: 456 };
-      const manager: IEmployee = { id: 79320 };
+      const employee: IEmployee = { id: 'CBA' };
+      const manager: IEmployee = { id: '6b1a0c8c-4acb-491f-9653-7db134c2cba3' };
       employee.manager = manager;
-      const department: IDepartment = { id: 60127 };
-      employee.department = department;
 
       activatedRoute.data = of({ employee });
       comp.ngOnInit();
 
       expect(comp.editForm.value).toEqual(expect.objectContaining(employee));
       expect(comp.employeesSharedCollection).toContain(manager);
-      expect(comp.departmentsSharedCollection).toContain(department);
     });
   });
 
@@ -104,7 +78,7 @@ describe('Employee Management Update Component', () => {
     it('Should call update service on save for existing entity', () => {
       // GIVEN
       const saveSubject = new Subject<HttpResponse<Employee>>();
-      const employee = { id: 123 };
+      const employee = { id: 'ABC' };
       jest.spyOn(employeeService, 'update').mockReturnValue(saveSubject);
       jest.spyOn(comp, 'previousState');
       activatedRoute.data = of({ employee });
@@ -146,7 +120,7 @@ describe('Employee Management Update Component', () => {
     it('Should set isSaving to false on error', () => {
       // GIVEN
       const saveSubject = new Subject<HttpResponse<Employee>>();
-      const employee = { id: 123 };
+      const employee = { id: 'ABC' };
       jest.spyOn(employeeService, 'update').mockReturnValue(saveSubject);
       jest.spyOn(comp, 'previousState');
       activatedRoute.data = of({ employee });
@@ -167,16 +141,8 @@ describe('Employee Management Update Component', () => {
   describe('Tracking relationships identifiers', () => {
     describe('trackEmployeeById', () => {
       it('Should return tracked Employee primary key', () => {
-        const entity = { id: 123 };
+        const entity = { id: 'ABC' };
         const trackResult = comp.trackEmployeeById(0, entity);
-        expect(trackResult).toEqual(entity.id);
-      });
-    });
-
-    describe('trackDepartmentById', () => {
-      it('Should return tracked Department primary key', () => {
-        const entity = { id: 123 };
-        const trackResult = comp.trackDepartmentById(0, entity);
         expect(trackResult).toEqual(entity.id);
       });
     });

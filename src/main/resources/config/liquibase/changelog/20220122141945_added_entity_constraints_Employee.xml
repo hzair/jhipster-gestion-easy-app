@@ -13,11 +13,5 @@
                                  constraintName="fk_employee__manager_id"
                                  referencedColumnNames="id"
                                  referencedTableName="employee"/>
-
-        <addForeignKeyConstraint baseColumnNames="department_id"
-                                 baseTableName="employee"
-                                 constraintName="fk_employee__department_id"
-                                 referencedColumnNames="id"
-                                 referencedTableName="department"/>
     </changeSet>
 </databaseChangeLog>

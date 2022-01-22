@@ -45,10 +45,10 @@
           <select class="form-control" id="field_employee" data-cy="employee" name="employee" formControlName="employee">
             <option [ngValue]="null"></option>
             <option
-              [ngValue]="employeeOption.id === editForm.get('employee')!.value?.id ? editForm.get('employee')!.value : employeeOption"
-              *ngFor="let employeeOption of employeesSharedCollection; trackBy: trackEmployeeById"
+              [ngValue]="employee2Option.id === editForm.get('employee')!.value?.id ? editForm.get('employee')!.value : employee2Option"
+              *ngFor="let employee2Option of employee2sSharedCollection; trackBy: trackEmployee2ById"
             >
-              {{ employeeOption.id }}
+              {{ employee2Option.id }}
             </option>
           </select>
         </div>

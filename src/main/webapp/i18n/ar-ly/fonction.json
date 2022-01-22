@@ -1,0 +1,10 @@
+{
+  "gestionEasyApp": {
+    "Fonction": {
+      "null": "",
+      "ADMIN": "ADMIN",
+      "LIVREUR": "LIVREUR",
+      "MANAGER": "MANAGER"
+    }
+  }
+}

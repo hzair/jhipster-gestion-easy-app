@@ -8,25 +8,42 @@
       <div>
         <jhi-alert-error></jhi-alert-error>
 
-        <div class="form-group" [hidden]="editForm.get('id')!.value == null">
-          <label class="form-control-label" jhiTranslate="global.field.id" for="field_id">ID</label>
-          <input type="number" class="form-control" name="id" id="field_id" data-cy="id" formControlName="id" [readonly]="true" />
+        <div class="form-group">
+          <label class="form-control-label" jhiTranslate="gestionEasyApp.employee.id" for="field_id">Id</label>
+          <input
+            type="text"
+            class="form-control"
+            name="id"
+            id="field_id"
+            data-cy="id"
+            formControlName="id"
+            [readonly]="editForm.get('id')!.value != null"
+          />
         </div>
 
         <div class="form-group">
-          <label
-            class="form-control-label"
-            jhiTranslate="gestionEasyApp.employee.firstName"
-            for="field_firstName"
-            [ngbTooltip]="'gestionEasyApp.employee.help.firstName' | translate"
-            >First Name</label
-          >
-          <input type="text" class="form-control" name="firstName" id="field_firstName" data-cy="firstName" formControlName="firstName" />
+          <label class="form-control-label" jhiTranslate="gestionEasyApp.employee.matricule" for="field_matricule">Matricule</label>
+          <input type="text" class="form-control" name="matricule" id="field_matricule" data-cy="matricule" formControlName="matricule" />
         </div>
 
         <div class="form-group">
-          <label class="form-control-label" jhiTranslate="gestionEasyApp.employee.lastName" for="field_lastName">Last Name</label>
-          <input type="text" class="form-control" name="lastName" id="field_lastName" data-cy="lastName" formControlName="lastName" />
+          <label class="form-control-label" jhiTranslate="gestionEasyApp.employee.fonction" for="field_fonction">Fonction</label>
+          <select class="form-control" name="fonction" formControlName="fonction" id="field_fonction" data-cy="fonction">
+            <option [ngValue]="null">{{ 'gestionEasyApp.Fonction.null' | translate }}</option>
+            <option *ngFor="let fonction of fonctionValues" [value]="fonction">
+              {{ 'gestionEasyApp.Fonction.' + fonction | translate }}
+            </option>
+          </select>
+        </div>
+
+        <div class="form-group">
+          <label class="form-control-label" jhiTranslate="gestionEasyApp.employee.nom" for="field_nom">Nom</label>
+          <input type="text" class="form-control" name="nom" id="field_nom" data-cy="nom" formControlName="nom" />
+        </div>
+
+        <div class="form-group">
+          <label class="form-control-label" jhiTranslate="gestionEasyApp.employee.prenom" for="field_prenom">Prenom</label>
+          <input type="text" class="form-control" name="prenom" id="field_prenom" data-cy="prenom" formControlName="prenom" />
         </div>
 
         <div class="form-group">
@@ -47,23 +64,25 @@
         </div>
 
         <div class="form-group">
-          <label class="form-control-label" jhiTranslate="gestionEasyApp.employee.hireDate" for="field_hireDate">Hire Date</label>
+          <label class="form-control-label" jhiTranslate="gestionEasyApp.employee.dateEmbauche" for="field_dateEmbauche"
+            >Date Embauche</label
+          >
           <div class="d-flex">
             <input
-              id="field_hireDate"
-              data-cy="hireDate"
+              id="field_dateEmbauche"
+              data-cy="dateEmbauche"
               type="datetime-local"
               class="form-control"
-              name="hireDate"
-              formControlName="hireDate"
+              name="dateEmbauche"
+              formControlName="dateEmbauche"
               placeholder="YYYY-MM-DD HH:mm"
             />
           </div>
         </div>
 
         <div class="form-group">
-          <label class="form-control-label" jhiTranslate="gestionEasyApp.employee.salary" for="field_salary">Salary</label>
-          <input type="number" class="form-control" name="salary" id="field_salary" data-cy="salary" formControlName="salary" />
+          <label class="form-control-label" jhiTranslate="gestionEasyApp.employee.salaire" for="field_salaire">Salaire</label>
+          <input type="number" class="form-control" name="salaire" id="field_salaire" data-cy="salaire" formControlName="salaire" />
         </div>
 
         <div class="form-group">
@@ -89,21 +108,6 @@
               *ngFor="let employeeOption of employeesSharedCollection; trackBy: trackEmployeeById"
             >
               {{ employeeOption.id }}
-            </option>
-          </select>
-        </div>
-
-        <div class="form-group">
-          <label class="form-control-label" jhiTranslate="gestionEasyApp.employee.department" for="field_department">Department</label>
-          <select class="form-control" id="field_department" data-cy="department" name="department" formControlName="department">
-            <option [ngValue]="null"></option>
-            <option
-              [ngValue]="
-                departmentOption.id === editForm.get('department')!.value?.id ? editForm.get('department')!.value : departmentOption
-              "
-              *ngFor="let departmentOption of departmentsSharedCollection; trackBy: trackDepartmentById"
-            >
-              {{ departmentOption.id }}
             </option>
           </select>
         </div>

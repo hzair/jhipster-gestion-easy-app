@@ -10,8 +10,7 @@ import { DATE_TIME_FORMAT } from 'app/config/input.constants';
 
 import { IEmployee, Employee } from '../employee.model';
 import { EmployeeService } from '../service/employee.service';
-import { IDepartment } from 'app/entities/department/department.model';
-import { DepartmentService } from 'app/entities/department/service/department.service';
+import { Fonction } from 'app/entities/enumerations/fonction.model';
 
 @Component({
   selector: 'jhi-employee-update',
@@ -19,35 +18,31 @@ import { DepartmentService } from 'app/entities/department/service/department.se
 })
 export class EmployeeUpdateComponent implements OnInit {
   isSaving = false;
+  fonctionValues = Object.keys(Fonction);
 
   employeesSharedCollection: IEmployee[] = [];
-  departmentsSharedCollection: IDepartment[] = [];
 
   editForm = this.fb.group({
     id: [],
-    firstName: [],
-    lastName: [],
+    matricule: [],
+    fonction: [],
+    nom: [],
+    prenom: [],
     email: [],
     phoneNumber: [],
-    hireDate: [],
-    salary: [],
+    dateEmbauche: [],
+    salaire: [],
     commissionPct: [],
     manager: [],
-    department: [],
   });
 
-  constructor(
-    protected employeeService: EmployeeService,
-    protected departmentService: DepartmentService,
-    protected activatedRoute: ActivatedRoute,
-    protected fb: FormBuilder
-  ) {}
+  constructor(protected employeeService: EmployeeService, protected activatedRoute: ActivatedRoute, protected fb: FormBuilder) {}
 
   ngOnInit(): void {
     this.activatedRoute.data.subscribe(({ employee }) => {
       if (employee.id === undefined) {
         const today = dayjs().startOf('day');
-        employee.hireDate = today;
+        employee.dateEmbauche = today;
       }
 
       this.updateForm(employee);
@@ -70,11 +65,7 @@ export class EmployeeUpdateComponent implements OnInit {
     }
   }
 
-  trackEmployeeById(index: number, item: IEmployee): number {
-    return item.id!;
-  }
-
-  trackDepartmentById(index: number, item: IDepartment): number {
+  trackEmployeeById(index: number, item: IEmployee): string {
     return item.id!;
   }
 
@@ -100,24 +91,21 @@ export class EmployeeUpdateComponent implements OnInit {
   protected updateForm(employee: IEmployee): void {
     this.editForm.patchValue({
       id: employee.id,
-      firstName: employee.firstName,
-      lastName: employee.lastName,
+      matricule: employee.matricule,
+      fonction: employee.fonction,
+      nom: employee.nom,
+      prenom: employee.prenom,
       email: employee.email,
       phoneNumber: employee.phoneNumber,
-      hireDate: employee.hireDate ? employee.hireDate.format(DATE_TIME_FORMAT) : null,
-      salary: employee.salary,
+      dateEmbauche: employee.dateEmbauche ? employee.dateEmbauche.format(DATE_TIME_FORMAT) : null,
+      salaire: employee.salaire,
       commissionPct: employee.commissionPct,
       manager: employee.manager,
-      department: employee.department,
     });
 
     this.employeesSharedCollection = this.employeeService.addEmployeeToCollectionIfMissing(
       this.employeesSharedCollection,
       employee.manager
-    );
-    this.departmentsSharedCollection = this.departmentService.addDepartmentToCollectionIfMissing(
-      this.departmentsSharedCollection,
-      employee.department
     );
   }
 
@@ -131,31 +119,24 @@ export class EmployeeUpdateComponent implements OnInit {
         )
       )
       .subscribe((employees: IEmployee[]) => (this.employeesSharedCollection = employees));
-
-    this.departmentService
-      .query()
-      .pipe(map((res: HttpResponse<IDepartment[]>) => res.body ?? []))
-      .pipe(
-        map((departments: IDepartment[]) =>
-          this.departmentService.addDepartmentToCollectionIfMissing(departments, this.editForm.get('department')!.value)
-        )
-      )
-      .subscribe((departments: IDepartment[]) => (this.departmentsSharedCollection = departments));
   }
 
   protected createFromForm(): IEmployee {
     return {
       ...new Employee(),
       id: this.editForm.get(['id'])!.value,
-      firstName: this.editForm.get(['firstName'])!.value,
-      lastName: this.editForm.get(['lastName'])!.value,
+      matricule: this.editForm.get(['matricule'])!.value,
+      fonction: this.editForm.get(['fonction'])!.value,
+      nom: this.editForm.get(['nom'])!.value,
+      prenom: this.editForm.get(['prenom'])!.value,
       email: this.editForm.get(['email'])!.value,
       phoneNumber: this.editForm.get(['phoneNumber'])!.value,
-      hireDate: this.editForm.get(['hireDate'])!.value ? dayjs(this.editForm.get(['hireDate'])!.value, DATE_TIME_FORMAT) : undefined,
-      salary: this.editForm.get(['salary'])!.value,
+      dateEmbauche: this.editForm.get(['dateEmbauche'])!.value
+        ? dayjs(this.editForm.get(['dateEmbauche'])!.value, DATE_TIME_FORMAT)
+        : undefined,
+      salaire: this.editForm.get(['salaire'])!.value,
       commissionPct: this.editForm.get(['commissionPct'])!.value,
       manager: this.editForm.get(['manager'])!.value,
-      department: this.editForm.get(['department'])!.value,
     };
   }
 }

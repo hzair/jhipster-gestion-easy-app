@@ -35,15 +35,15 @@ public class JobHistory implements Serializable {
     @JoinColumn(unique = true)
     private Job job;
 
-    @JsonIgnoreProperties(value = { "location", "employees" }, allowSetters = true)
+    @JsonIgnoreProperties(value = { "location", "employee2s" }, allowSetters = true)
     @OneToOne
     @JoinColumn(unique = true)
     private Department department;
 
-    @JsonIgnoreProperties(value = { "jobs", "manager", "department" }, allowSetters = true)
+    @JsonIgnoreProperties(value = { "manager" }, allowSetters = true)
     @OneToOne
     @JoinColumn(unique = true)
-    private Employee employee;
+    private Employee employee2;
 
     // jhipster-needle-entity-add-field - JHipster will add fields here
 
@@ -125,16 +125,16 @@ public class JobHistory implements Serializable {
         return this;
     }
 
-    public Employee getEmployee() {
-        return this.employee;
+    public Employee getEmployee2() {
+        return this.employee2;
     }
 
-    public void setEmployee(Employee employee) {
-        this.employee = employee;
+    public void setEmployee2(Employee employee) {
+        this.employee2 = employee;
     }
 
-    public JobHistory employee(Employee employee) {
-        this.setEmployee(employee);
+    public JobHistory employee2(Employee employee) {
+        this.setEmployee2(employee);
         return this;
     }
 

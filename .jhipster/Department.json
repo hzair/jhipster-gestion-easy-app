@@ -17,10 +17,10 @@
     },
     {
       "relationshipType": "one-to-many",
-      "otherEntityName": "employee",
+      "otherEntityName": "employee2",
       "otherEntityRelationshipName": "department",
       "javadoc": "A relationship",
-      "relationshipName": "employee"
+      "relationshipName": "employee2"
     }
   ],
   "entityTableName": "department",

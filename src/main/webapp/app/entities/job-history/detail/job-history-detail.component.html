@@ -38,10 +38,10 @@
             <a [routerLink]="['/department', jobHistory.department?.id, 'view']">{{ jobHistory.department?.id }}</a>
           </div>
         </dd>
-        <dt><span jhiTranslate="gestionEasyApp.jobHistory.employee">Employee</span></dt>
+        <dt><span jhiTranslate="gestionEasyApp.jobHistory.employee2">Employee 2</span></dt>
         <dd>
-          <div *ngIf="jobHistory.employee">
-            <a [routerLink]="['/employee', jobHistory.employee?.id, 'view']">{{ jobHistory.employee?.id }}</a>
+          <div *ngIf="jobHistory.employee2">
+            <a [routerLink]="['/employee', jobHistory.employee2?.id, 'view']">{{ jobHistory.employee2?.id }}</a>
           </div>
         </dd>
       </dl>

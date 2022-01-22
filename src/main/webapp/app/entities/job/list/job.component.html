@@ -58,7 +58,7 @@
           <td>{{ job.maxSalary }}</td>
           <td>
             <div *ngIf="job.employee">
-              <a [routerLink]="['/employee', job.employee?.id, 'view']">{{ job.employee?.id }}</a>
+              <a [routerLink]="['/employee-2', job.employee?.id, 'view']">{{ job.employee?.id }}</a>
             </div>
           </td>
           <td class="text-right">

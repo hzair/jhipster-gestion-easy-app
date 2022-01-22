@@ -10,21 +10,25 @@
       <jhi-alert></jhi-alert>
 
       <dl class="row-md jh-entity-details">
-        <dt><span jhiTranslate="global.field.id">ID</span></dt>
+        <dt><span jhiTranslate="gestionEasyApp.employee.id">Id</span></dt>
         <dd>
           <span>{{ employee.id }}</span>
         </dd>
-        <dt>
-          <span jhiTranslate="gestionEasyApp.employee.firstName" [ngbTooltip]="'gestionEasyApp.employee.help.firstName' | translate"
-            >First Name</span
-          >
-        </dt>
+        <dt><span jhiTranslate="gestionEasyApp.employee.matricule">Matricule</span></dt>
         <dd>
-          <span>{{ employee.firstName }}</span>
+          <span>{{ employee.matricule }}</span>
         </dd>
-        <dt><span jhiTranslate="gestionEasyApp.employee.lastName">Last Name</span></dt>
+        <dt><span jhiTranslate="gestionEasyApp.employee.fonction">Fonction</span></dt>
         <dd>
-          <span>{{ employee.lastName }}</span>
+          <span jhiTranslate="{{ 'gestionEasyApp.Fonction.' + employee.fonction }}">{{ employee.fonction }}</span>
+        </dd>
+        <dt><span jhiTranslate="gestionEasyApp.employee.nom">Nom</span></dt>
+        <dd>
+          <span>{{ employee.nom }}</span>
+        </dd>
+        <dt><span jhiTranslate="gestionEasyApp.employee.prenom">Prenom</span></dt>
+        <dd>
+          <span>{{ employee.prenom }}</span>
         </dd>
         <dt><span jhiTranslate="gestionEasyApp.employee.email">Email</span></dt>
         <dd>
@@ -34,13 +38,13 @@
         <dd>
           <span>{{ employee.phoneNumber }}</span>
         </dd>
-        <dt><span jhiTranslate="gestionEasyApp.employee.hireDate">Hire Date</span></dt>
+        <dt><span jhiTranslate="gestionEasyApp.employee.dateEmbauche">Date Embauche</span></dt>
         <dd>
-          <span>{{ employee.hireDate | formatMediumDatetime }}</span>
+          <span>{{ employee.dateEmbauche | formatMediumDatetime }}</span>
         </dd>
-        <dt><span jhiTranslate="gestionEasyApp.employee.salary">Salary</span></dt>
+        <dt><span jhiTranslate="gestionEasyApp.employee.salaire">Salaire</span></dt>
         <dd>
-          <span>{{ employee.salary }}</span>
+          <span>{{ employee.salaire }}</span>
         </dd>
         <dt><span jhiTranslate="gestionEasyApp.employee.commissionPct">Commission Pct</span></dt>
         <dd>
@@ -50,12 +54,6 @@
         <dd>
           <div *ngIf="employee.manager">
             <a [routerLink]="['/employee', employee.manager?.id, 'view']">{{ employee.manager?.id }}</a>
-          </div>
-        </dd>
-        <dt><span jhiTranslate="gestionEasyApp.employee.department">Department</span></dt>
-        <dd>
-          <div *ngIf="employee.department">
-            <a [routerLink]="['/department', employee.department?.id, 'view']">{{ employee.department?.id }}</a>
           </div>
         </dd>
       </dl>

@@ -20,9 +20,9 @@
                                  referencedColumnNames="id"
                                  referencedTableName="department"/>
 
-        <addForeignKeyConstraint baseColumnNames="employee_id"
+        <addForeignKeyConstraint baseColumnNames="employee2_id"
                                  baseTableName="job_history"
-                                 constraintName="fk_job_history__employee_id"
+                                 constraintName="fk_job_history__employee2_id"
                                  referencedColumnNames="id"
                                  referencedTableName="employee"/>
     </changeSet>

@@ -14,7 +14,7 @@ describe('Employee Management Detail Component', () => {
       providers: [
         {
           provide: ActivatedRoute,
-          useValue: { data: of({ employee: { id: 123 } }) },
+          useValue: { data: of({ employee: { id: 'ABC' } }) },
         },
       ],
     })
@@ -30,7 +30,7 @@ describe('Employee Management Detail Component', () => {
       comp.ngOnInit();
 
       // THEN
-      expect(comp.employee).toEqual(expect.objectContaining({ id: 123 }));
+      expect(comp.employee).toEqual(expect.objectContaining({ id: 'ABC' }));
     });
   });
 });

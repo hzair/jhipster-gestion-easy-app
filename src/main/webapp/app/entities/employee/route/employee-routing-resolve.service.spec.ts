@@ -43,7 +43,7 @@ describe('Employee routing resolve service', () => {
     it('should return IEmployee returned by find', () => {
       // GIVEN
       service.find = jest.fn(id => of(new HttpResponse({ body: { id } })));
-      mockActivatedRouteSnapshot.params = { id: 123 };
+      mockActivatedRouteSnapshot.params = { id: 'ABC' };
 
       // WHEN
       routingResolveService.resolve(mockActivatedRouteSnapshot).subscribe(result => {
@@ -51,8 +51,8 @@ describe('Employee routing resolve service', () => {
       });
 
       // THEN
-      expect(service.find).toBeCalledWith(123);
-      expect(resultEmployee).toEqual({ id: 123 });
+      expect(service.find).toBeCalledWith('ABC');
+      expect(resultEmployee).toEqual({ id: 'ABC' });
     });
 
     it('should return new IEmployee if id is not provided', () => {
@@ -73,7 +73,7 @@ describe('Employee routing resolve service', () => {
     it('should route to 404 page if data not found in server', () => {
       // GIVEN
       jest.spyOn(service, 'find').mockReturnValue(of(new HttpResponse({ body: null as unknown as Employee })));
-      mockActivatedRouteSnapshot.params = { id: 123 };
+      mockActivatedRouteSnapshot.params = { id: 'ABC' };
 
       // WHEN
       routingResolveService.resolve(mockActivatedRouteSnapshot).subscribe(result => {
@@ -81,7 +81,7 @@ describe('Employee routing resolve service', () => {
       });
 
       // THEN
-      expect(service.find).toBeCalledWith(123);
+      expect(service.find).toBeCalledWith('ABC');
       expect(resultEmployee).toEqual(undefined);
       expect(mockRouter.navigate).toHaveBeenCalledWith(['404']);
     });

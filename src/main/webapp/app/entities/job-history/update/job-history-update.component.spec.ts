@@ -90,22 +90,22 @@ describe('JobHistory Management Update Component', () => {
       expect(comp.departmentsCollection).toEqual(expectedCollection);
     });
 
-    it('Should call employee query and add missing value', () => {
+    it('Should call employee2 query and add missing value', () => {
       const jobHistory: IJobHistory = { id: 456 };
-      const employee: IEmployee = { id: 94649 };
-      jobHistory.employee = employee;
+      const employee2: IEmployee = { id: 'fee2d000-df73-4566-85b7-94b2159aa534' };
+      jobHistory.employee2 = employee2;
 
-      const employeeCollection: IEmployee[] = [{ id: 89297 }];
-      jest.spyOn(employeeService, 'query').mockReturnValue(of(new HttpResponse({ body: employeeCollection })));
-      const expectedCollection: IEmployee[] = [employee, ...employeeCollection];
+      const employee2Collection: IEmployee[] = [{ id: 'dffaa473-32f6-4a0e-91b6-96cc8cea597a' }];
+      jest.spyOn(employeeService, 'query').mockReturnValue(of(new HttpResponse({ body: employee2Collection })));
+      const expectedCollection: IEmployee[] = [employee2, ...employee2Collection];
       jest.spyOn(employeeService, 'addEmployeeToCollectionIfMissing').mockReturnValue(expectedCollection);
 
       activatedRoute.data = of({ jobHistory });
       comp.ngOnInit();
 
       expect(employeeService.query).toHaveBeenCalled();
-      expect(employeeService.addEmployeeToCollectionIfMissing).toHaveBeenCalledWith(employeeCollection, employee);
-      expect(comp.employeesCollection).toEqual(expectedCollection);
+      expect(employeeService.addEmployeeToCollectionIfMissing).toHaveBeenCalledWith(employee2Collection, employee2);
+      expect(comp.employee2sCollection).toEqual(expectedCollection);
     });
 
     it('Should update editForm', () => {
@@ -114,8 +114,8 @@ describe('JobHistory Management Update Component', () => {
       jobHistory.job = job;
       const department: IDepartment = { id: 42374 };
       jobHistory.department = department;
-      const employee: IEmployee = { id: 88001 };
-      jobHistory.employee = employee;
+      const employee2: IEmployee = { id: 'a91f3692-9ba1-41f9-bf2b-26fb24694e5e' };
+      jobHistory.employee2 = employee2;
 
       activatedRoute.data = of({ jobHistory });
       comp.ngOnInit();
@@ -123,7 +123,7 @@ describe('JobHistory Management Update Component', () => {
       expect(comp.editForm.value).toEqual(expect.objectContaining(jobHistory));
       expect(comp.jobsCollection).toContain(job);
       expect(comp.departmentsCollection).toContain(department);
-      expect(comp.employeesCollection).toContain(employee);
+      expect(comp.employee2sCollection).toContain(employee2);
     });
   });
 
@@ -210,7 +210,7 @@ describe('JobHistory Management Update Component', () => {
 
     describe('trackEmployeeById', () => {
       it('Should return tracked Employee primary key', () => {
-        const entity = { id: 123 };
+        const entity = { id: 'ABC' };
         const trackResult = comp.trackEmployeeById(0, entity);
         expect(trackResult).toEqual(entity.id);
       });

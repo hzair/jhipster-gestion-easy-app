@@ -1,0 +1,105 @@
+<div class="row justify-content-center">
+  <div class="col-8">
+    <form name="editForm" role="form" novalidate (ngSubmit)="save()" [formGroup]="editForm">
+      <h2 id="jhi-produit-heading" data-cy="ProduitCreateUpdateHeading" jhiTranslate="gestionEasyApp.produit.home.createOrEditLabel">
+        Create or edit a Produit
+      </h2>
+
+      <div>
+        <jhi-alert-error></jhi-alert-error>
+
+        <div class="form-group">
+          <label class="form-control-label" jhiTranslate="gestionEasyApp.produit.id" for="field_id">Id</label>
+          <input
+            type="text"
+            class="form-control"
+            name="id"
+            id="field_id"
+            data-cy="id"
+            formControlName="id"
+            [readonly]="editForm.get('id')!.value != null"
+          />
+        </div>
+
+        <div class="form-group">
+          <label class="form-control-label" jhiTranslate="gestionEasyApp.produit.idFonc" for="field_idFonc">Id Fonc</label>
+          <input type="text" class="form-control" name="idFonc" id="field_idFonc" data-cy="idFonc" formControlName="idFonc" />
+        </div>
+
+        <div class="form-group">
+          <label class="form-control-label" jhiTranslate="gestionEasyApp.produit.idFournisseur" for="field_idFournisseur"
+            >Id Fournisseur</label
+          >
+          <input
+            type="text"
+            class="form-control"
+            name="idFournisseur"
+            id="field_idFournisseur"
+            data-cy="idFournisseur"
+            formControlName="idFournisseur"
+          />
+        </div>
+
+        <div class="form-group">
+          <label class="form-control-label" jhiTranslate="gestionEasyApp.produit.nom" for="field_nom">Nom</label>
+          <input type="text" class="form-control" name="nom" id="field_nom" data-cy="nom" formControlName="nom" />
+        </div>
+
+        <div class="form-group">
+          <label class="form-control-label" jhiTranslate="gestionEasyApp.produit.description" for="field_description">Description</label>
+          <input
+            type="text"
+            class="form-control"
+            name="description"
+            id="field_description"
+            data-cy="description"
+            formControlName="description"
+          />
+        </div>
+
+        <div class="form-group">
+          <label class="form-control-label" jhiTranslate="gestionEasyApp.produit.quantite" for="field_quantite">Quantite</label>
+          <input type="number" class="form-control" name="quantite" id="field_quantite" data-cy="quantite" formControlName="quantite" />
+        </div>
+
+        <div class="form-group">
+          <label class="form-control-label" jhiTranslate="gestionEasyApp.produit.image" for="field_image">Image</label>
+          <input type="text" class="form-control" name="image" id="field_image" data-cy="image" formControlName="image" />
+        </div>
+
+        <div class="form-group">
+          <label class="form-control-label" jhiTranslate="gestionEasyApp.produit.dateExpiration" for="field_dateExpiration"
+            >Date Expiration</label
+          >
+          <div class="d-flex">
+            <input
+              id="field_dateExpiration"
+              data-cy="dateExpiration"
+              type="datetime-local"
+              class="form-control"
+              name="dateExpiration"
+              formControlName="dateExpiration"
+              placeholder="YYYY-MM-DD HH:mm"
+            />
+          </div>
+        </div>
+      </div>
+
+      <div>
+        <button type="button" id="cancel-save" data-cy="entityCreateCancelButton" class="btn btn-secondary" (click)="previousState()">
+          <fa-icon icon="ban"></fa-icon>&nbsp;<span jhiTranslate="entity.action.cancel">Cancel</span>
+        </button>
+
+        <button
+          type="submit"
+          id="save-entity"
+          data-cy="entityCreateSaveButton"
+          [disabled]="editForm.invalid || isSaving"
+          class="btn btn-primary"
+        >
+          <fa-icon icon="save"></fa-icon>&nbsp;<span jhiTranslate="entity.action.save">Save</span>
+        </button>
+      </div>
+    </form>
+  </div>
+</div>

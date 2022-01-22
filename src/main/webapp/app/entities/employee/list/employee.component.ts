@@ -68,7 +68,7 @@ export class EmployeeComponent implements OnInit {
     this.loadAll();
   }
 
-  trackId(index: number, item: IEmployee): number {
+  trackId(index: number, item: IEmployee): string {
     return item.id!;
   }
 

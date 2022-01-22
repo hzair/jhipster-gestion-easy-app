@@ -86,12 +86,12 @@
         </div>
 
         <div class="form-group">
-          <label class="form-control-label" jhiTranslate="gestionEasyApp.jobHistory.employee" for="field_employee">Employee</label>
-          <select class="form-control" id="field_employee" data-cy="employee" name="employee" formControlName="employee">
+          <label class="form-control-label" jhiTranslate="gestionEasyApp.jobHistory.employee2" for="field_employee2">Employee 2</label>
+          <select class="form-control" id="field_employee2" data-cy="employee2" name="employee2" formControlName="employee2">
             <option [ngValue]="null"></option>
             <option
-              [ngValue]="employeeOption.id === editForm.get('employee')!.value?.id ? editForm.get('employee')!.value : employeeOption"
-              *ngFor="let employeeOption of employeesCollection; trackBy: trackEmployeeById"
+              [ngValue]="employeeOption.id === editForm.get('employee2')!.value?.id ? editForm.get('employee2')!.value : employeeOption"
+              *ngFor="let employeeOption of employee2sCollection; trackBy: trackEmployeeById"
             >
               {{ employeeOption.id }}
             </option>

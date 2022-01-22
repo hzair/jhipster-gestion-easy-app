@@ -35,8 +35,8 @@ public class Job implements Serializable {
     private Set<Task> tasks = new HashSet<>();
 
     @ManyToOne
-    @JsonIgnoreProperties(value = { "jobs", "manager", "department" }, allowSetters = true)
-    private Employee employee;
+    @JsonIgnoreProperties(value = { "jobs", "department" }, allowSetters = true)
+    private Employee2 employee;
 
     // jhipster-needle-entity-add-field - JHipster will add fields here
 
@@ -117,16 +117,16 @@ public class Job implements Serializable {
         return this;
     }
 
-    public Employee getEmployee() {
+    public Employee2 getEmployee() {
         return this.employee;
     }
 
-    public void setEmployee(Employee employee) {
-        this.employee = employee;
+    public void setEmployee(Employee2 employee2) {
+        this.employee = employee2;
     }
 
-    public Job employee(Employee employee) {
-        this.setEmployee(employee);
+    public Job employee(Employee2 employee2) {
+        this.setEmployee(employee2);
         return this;
     }
 
