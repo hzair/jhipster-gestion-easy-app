@@ -1,0 +1,24 @@
+{
+  "gestionEasyApp": {
+    "imputation": {
+      "home": {
+        "title": "Imputations",
+        "refreshListLabel": "Refresh list",
+        "createLabel": "Create a new Imputation",
+        "createOrEditLabel": "Create or edit a Imputation",
+        "notFound": "No Imputations found"
+      },
+      "created": "A new Imputation is created with identifier {{ param }}",
+      "updated": "A Imputation is updated with identifier {{ param }}",
+      "deleted": "A Imputation is deleted with identifier {{ param }}",
+      "delete": {
+        "question": "Are you sure you want to delete Imputation {{ id }}?"
+      },
+      "detail": {
+        "title": "Imputation"
+      },
+      "id": "Id",
+      "date": "Date"
+    }
+  }
+}

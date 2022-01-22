@@ -17,20 +17,17 @@
       "detail": {
         "title": "Employee"
       },
-      "id": "ID",
-      "firstName": "First Name",
-      "lastName": "Last Name",
+      "id": "Id",
+      "matricule": "Matricule",
+      "fonction": "Fonction",
+      "nom": "Nom",
+      "prenom": "Prenom",
       "email": "Email",
       "phoneNumber": "Phone Number",
-      "hireDate": "Hire Date",
-      "salary": "Salary",
+      "dateEmbauche": "Date Embauche",
+      "salaire": "Salaire",
       "commissionPct": "Commission Pct",
-      "job": "Job",
-      "manager": "Manager",
-      "department": "Department",
-      "help": {
-        "firstName": "The firstname attribute."
-      }
+      "manager": "Manager"
     }
   }
 }

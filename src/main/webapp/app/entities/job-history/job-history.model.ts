@@ -11,7 +11,7 @@ export interface IJobHistory {
   language?: Language | null;
   job?: IJob | null;
   department?: IDepartment | null;
-  employee?: IEmployee | null;
+  employee2?: IEmployee | null;
 }
 
 export class JobHistory implements IJobHistory {
@@ -22,7 +22,7 @@ export class JobHistory implements IJobHistory {
     public language?: Language | null,
     public job?: IJob | null,
     public department?: IDepartment | null,
-    public employee?: IEmployee | null
+    public employee2?: IEmployee | null
   ) {}
 }
 

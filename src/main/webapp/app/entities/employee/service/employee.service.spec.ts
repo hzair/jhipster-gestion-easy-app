@@ -3,6 +3,7 @@ import { HttpClientTestingModule, HttpTestingController } from '@angular/common/
 import dayjs from 'dayjs/esm';
 
 import { DATE_TIME_FORMAT } from 'app/config/input.constants';
+import { Fonction } from 'app/entities/enumerations/fonction.model';
 import { IEmployee, Employee } from '../employee.model';
 
 import { EmployeeService } from './employee.service';
@@ -24,13 +25,15 @@ describe('Employee Service', () => {
     currentDate = dayjs();
 
     elemDefault = {
-      id: 0,
-      firstName: 'AAAAAAA',
-      lastName: 'AAAAAAA',
+      id: 'AAAAAAA',
+      matricule: 'AAAAAAA',
+      fonction: Fonction.ADMIN,
+      nom: 'AAAAAAA',
+      prenom: 'AAAAAAA',
       email: 'AAAAAAA',
       phoneNumber: 'AAAAAAA',
-      hireDate: currentDate,
-      salary: 0,
+      dateEmbauche: currentDate,
+      salaire: 0,
       commissionPct: 0,
     };
   });
@@ -39,12 +42,12 @@ describe('Employee Service', () => {
     it('should find an element', () => {
       const returnedFromService = Object.assign(
         {
-          hireDate: currentDate.format(DATE_TIME_FORMAT),
+          dateEmbauche: currentDate.format(DATE_TIME_FORMAT),
         },
         elemDefault
       );
 
-      service.find(123).subscribe(resp => (expectedResult = resp.body));
+      service.find('ABC').subscribe(resp => (expectedResult = resp.body));
 
       const req = httpMock.expectOne({ method: 'GET' });
       req.flush(returnedFromService);
@@ -54,15 +57,15 @@ describe('Employee Service', () => {
     it('should create a Employee', () => {
       const returnedFromService = Object.assign(
         {
-          id: 0,
-          hireDate: currentDate.format(DATE_TIME_FORMAT),
+          id: 'ID',
+          dateEmbauche: currentDate.format(DATE_TIME_FORMAT),
         },
         elemDefault
       );
 
       const expected = Object.assign(
         {
-          hireDate: currentDate,
+          dateEmbauche: currentDate,
         },
         returnedFromService
       );
@@ -77,13 +80,15 @@ describe('Employee Service', () => {
     it('should update a Employee', () => {
       const returnedFromService = Object.assign(
         {
-          id: 1,
-          firstName: 'BBBBBB',
-          lastName: 'BBBBBB',
+          id: 'BBBBBB',
+          matricule: 'BBBBBB',
+          fonction: 'BBBBBB',
+          nom: 'BBBBBB',
+          prenom: 'BBBBBB',
           email: 'BBBBBB',
           phoneNumber: 'BBBBBB',
-          hireDate: currentDate.format(DATE_TIME_FORMAT),
-          salary: 1,
+          dateEmbauche: currentDate.format(DATE_TIME_FORMAT),
+          salaire: 1,
           commissionPct: 1,
         },
         elemDefault
@@ -91,7 +96,7 @@ describe('Employee Service', () => {
 
       const expected = Object.assign(
         {
-          hireDate: currentDate,
+          dateEmbauche: currentDate,
         },
         returnedFromService
       );
@@ -106,11 +111,13 @@ describe('Employee Service', () => {
     it('should partial update a Employee', () => {
       const patchObject = Object.assign(
         {
-          lastName: 'BBBBBB',
+          fonction: 'BBBBBB',
+          nom: 'BBBBBB',
+          prenom: 'BBBBBB',
           email: 'BBBBBB',
           phoneNumber: 'BBBBBB',
-          hireDate: currentDate.format(DATE_TIME_FORMAT),
-          salary: 1,
+          dateEmbauche: currentDate.format(DATE_TIME_FORMAT),
+          salaire: 1,
           commissionPct: 1,
         },
         new Employee()
@@ -120,7 +127,7 @@ describe('Employee Service', () => {
 
       const expected = Object.assign(
         {
-          hireDate: currentDate,
+          dateEmbauche: currentDate,
         },
         returnedFromService
       );
@@ -135,13 +142,15 @@ describe('Employee Service', () => {
     it('should return a list of Employee', () => {
       const returnedFromService = Object.assign(
         {
-          id: 1,
-          firstName: 'BBBBBB',
-          lastName: 'BBBBBB',
+          id: 'BBBBBB',
+          matricule: 'BBBBBB',
+          fonction: 'BBBBBB',
+          nom: 'BBBBBB',
+          prenom: 'BBBBBB',
           email: 'BBBBBB',
           phoneNumber: 'BBBBBB',
-          hireDate: currentDate.format(DATE_TIME_FORMAT),
-          salary: 1,
+          dateEmbauche: currentDate.format(DATE_TIME_FORMAT),
+          salaire: 1,
           commissionPct: 1,
         },
         elemDefault
@@ -149,7 +158,7 @@ describe('Employee Service', () => {
 
       const expected = Object.assign(
         {
-          hireDate: currentDate,
+          dateEmbauche: currentDate,
         },
         returnedFromService
       );
@@ -163,7 +172,7 @@ describe('Employee Service', () => {
     });
 
     it('should delete a Employee', () => {
-      service.delete(123).subscribe(resp => (expectedResult = resp.ok));
+      service.delete('ABC').subscribe(resp => (expectedResult = resp.ok));
 
       const req = httpMock.expectOne({ method: 'DELETE' });
       req.flush({ status: 200 });
@@ -172,42 +181,42 @@ describe('Employee Service', () => {
 
     describe('addEmployeeToCollectionIfMissing', () => {
       it('should add a Employee to an empty array', () => {
-        const employee: IEmployee = { id: 123 };
+        const employee: IEmployee = { id: 'ABC' };
         expectedResult = service.addEmployeeToCollectionIfMissing([], employee);
         expect(expectedResult).toHaveLength(1);
         expect(expectedResult).toContain(employee);
       });
 
       it('should not add a Employee to an array that contains it', () => {
-        const employee: IEmployee = { id: 123 };
+        const employee: IEmployee = { id: 'ABC' };
         const employeeCollection: IEmployee[] = [
           {
             ...employee,
           },
-          { id: 456 },
+          { id: 'CBA' },
         ];
         expectedResult = service.addEmployeeToCollectionIfMissing(employeeCollection, employee);
         expect(expectedResult).toHaveLength(2);
       });
 
       it("should add a Employee to an array that doesn't contain it", () => {
-        const employee: IEmployee = { id: 123 };
-        const employeeCollection: IEmployee[] = [{ id: 456 }];
+        const employee: IEmployee = { id: 'ABC' };
+        const employeeCollection: IEmployee[] = [{ id: 'CBA' }];
         expectedResult = service.addEmployeeToCollectionIfMissing(employeeCollection, employee);
         expect(expectedResult).toHaveLength(2);
         expect(expectedResult).toContain(employee);
       });
 
       it('should add only unique Employee to an array', () => {
-        const employeeArray: IEmployee[] = [{ id: 123 }, { id: 456 }, { id: 88217 }];
-        const employeeCollection: IEmployee[] = [{ id: 123 }];
+        const employeeArray: IEmployee[] = [{ id: 'ABC' }, { id: 'CBA' }, { id: 'abf8da19-cbe0-4a7f-9590-bdc5c7ce3e75' }];
+        const employeeCollection: IEmployee[] = [{ id: 'ABC' }];
         expectedResult = service.addEmployeeToCollectionIfMissing(employeeCollection, ...employeeArray);
         expect(expectedResult).toHaveLength(3);
       });
 
       it('should accept varargs', () => {
-        const employee: IEmployee = { id: 123 };
-        const employee2: IEmployee = { id: 456 };
+        const employee: IEmployee = { id: 'ABC' };
+        const employee2: IEmployee = { id: 'CBA' };
         expectedResult = service.addEmployeeToCollectionIfMissing([], employee, employee2);
         expect(expectedResult).toHaveLength(2);
         expect(expectedResult).toContain(employee);
@@ -215,14 +224,14 @@ describe('Employee Service', () => {
       });
 
       it('should accept null and undefined values', () => {
-        const employee: IEmployee = { id: 123 };
+        const employee: IEmployee = { id: 'ABC' };
         expectedResult = service.addEmployeeToCollectionIfMissing([], null, employee, undefined);
         expect(expectedResult).toHaveLength(1);
         expect(expectedResult).toContain(employee);
       });
 
       it('should return initial array if no Employee is added', () => {
-        const employeeCollection: IEmployee[] = [{ id: 123 }];
+        const employeeCollection: IEmployee[] = [{ id: 'ABC' }];
         expectedResult = service.addEmployeeToCollectionIfMissing(employeeCollection, undefined, null);
         expect(expectedResult).toEqual(employeeCollection);
       });

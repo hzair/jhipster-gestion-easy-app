@@ -24,6 +24,6 @@
                                  baseTableName="job"
                                  constraintName="fk_job__employee_id"
                                  referencedColumnNames="id"
-                                 referencedTableName="employee"/>
+                                 referencedTableName="employee_2"/>
     </changeSet>
 </databaseChangeLog>

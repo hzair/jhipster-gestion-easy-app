@@ -10,8 +10,8 @@ import { JobService } from '../service/job.service';
 import { IJob, Job } from '../job.model';
 import { ITask } from 'app/entities/task/task.model';
 import { TaskService } from 'app/entities/task/service/task.service';
-import { IEmployee } from 'app/entities/employee/employee.model';
-import { EmployeeService } from 'app/entities/employee/service/employee.service';
+import { IEmployee2 } from 'app/entities/employee-2/employee-2.model';
+import { Employee2Service } from 'app/entities/employee-2/service/employee-2.service';
 
 import { JobUpdateComponent } from './job-update.component';
 
@@ -21,7 +21,7 @@ describe('Job Management Update Component', () => {
   let activatedRoute: ActivatedRoute;
   let jobService: JobService;
   let taskService: TaskService;
-  let employeeService: EmployeeService;
+  let employee2Service: Employee2Service;
 
   beforeEach(() => {
     TestBed.configureTestingModule({
@@ -44,7 +44,7 @@ describe('Job Management Update Component', () => {
     activatedRoute = TestBed.inject(ActivatedRoute);
     jobService = TestBed.inject(JobService);
     taskService = TestBed.inject(TaskService);
-    employeeService = TestBed.inject(EmployeeService);
+    employee2Service = TestBed.inject(Employee2Service);
 
     comp = fixture.componentInstance;
   });
@@ -69,30 +69,30 @@ describe('Job Management Update Component', () => {
       expect(comp.tasksSharedCollection).toEqual(expectedCollection);
     });
 
-    it('Should call Employee query and add missing value', () => {
+    it('Should call Employee2 query and add missing value', () => {
       const job: IJob = { id: 456 };
-      const employee: IEmployee = { id: 75146 };
+      const employee: IEmployee2 = { id: 159 };
       job.employee = employee;
 
-      const employeeCollection: IEmployee[] = [{ id: 78248 }];
-      jest.spyOn(employeeService, 'query').mockReturnValue(of(new HttpResponse({ body: employeeCollection })));
-      const additionalEmployees = [employee];
-      const expectedCollection: IEmployee[] = [...additionalEmployees, ...employeeCollection];
-      jest.spyOn(employeeService, 'addEmployeeToCollectionIfMissing').mockReturnValue(expectedCollection);
+      const employee2Collection: IEmployee2[] = [{ id: 78760 }];
+      jest.spyOn(employee2Service, 'query').mockReturnValue(of(new HttpResponse({ body: employee2Collection })));
+      const additionalEmployee2s = [employee];
+      const expectedCollection: IEmployee2[] = [...additionalEmployee2s, ...employee2Collection];
+      jest.spyOn(employee2Service, 'addEmployee2ToCollectionIfMissing').mockReturnValue(expectedCollection);
 
       activatedRoute.data = of({ job });
       comp.ngOnInit();
 
-      expect(employeeService.query).toHaveBeenCalled();
-      expect(employeeService.addEmployeeToCollectionIfMissing).toHaveBeenCalledWith(employeeCollection, ...additionalEmployees);
-      expect(comp.employeesSharedCollection).toEqual(expectedCollection);
+      expect(employee2Service.query).toHaveBeenCalled();
+      expect(employee2Service.addEmployee2ToCollectionIfMissing).toHaveBeenCalledWith(employee2Collection, ...additionalEmployee2s);
+      expect(comp.employee2sSharedCollection).toEqual(expectedCollection);
     });
 
     it('Should update editForm', () => {
       const job: IJob = { id: 456 };
       const tasks: ITask = { id: 88679 };
       job.tasks = [tasks];
-      const employee: IEmployee = { id: 21743 };
+      const employee: IEmployee2 = { id: 27898 };
       job.employee = employee;
 
       activatedRoute.data = of({ job });
@@ -100,7 +100,7 @@ describe('Job Management Update Component', () => {
 
       expect(comp.editForm.value).toEqual(expect.objectContaining(job));
       expect(comp.tasksSharedCollection).toContain(tasks);
-      expect(comp.employeesSharedCollection).toContain(employee);
+      expect(comp.employee2sSharedCollection).toContain(employee);
     });
   });
 
@@ -177,10 +177,10 @@ describe('Job Management Update Component', () => {
       });
     });
 
-    describe('trackEmployeeById', () => {
-      it('Should return tracked Employee primary key', () => {
+    describe('trackEmployee2ById', () => {
+      it('Should return tracked Employee2 primary key', () => {
         const entity = { id: 123 };
-        const trackResult = comp.trackEmployeeById(0, entity);
+        const trackResult = comp.trackEmployee2ById(0, entity);
         expect(trackResult).toEqual(entity.id);
       });
     });

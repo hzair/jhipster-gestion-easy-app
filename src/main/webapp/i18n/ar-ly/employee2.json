@@ -1,0 +1,35 @@
+{
+  "gestionEasyApp": {
+    "employee2": {
+      "home": {
+        "title": "Employee 2 S",
+        "refreshListLabel": "Refresh list",
+        "createLabel": "Create a new Employee 2",
+        "createOrEditLabel": "Create or edit a Employee 2",
+        "notFound": "No Employee 2 S found"
+      },
+      "created": "A new Employee 2 is created with identifier {{ param }}",
+      "updated": "A Employee 2 is updated with identifier {{ param }}",
+      "deleted": "A Employee 2 is deleted with identifier {{ param }}",
+      "delete": {
+        "question": "Are you sure you want to delete Employee 2 {{ id }}?"
+      },
+      "detail": {
+        "title": "Employee 2"
+      },
+      "id": "ID",
+      "firstName": "First Name",
+      "lastName": "Last Name",
+      "email": "Email",
+      "phoneNumber": "Phone Number",
+      "hireDate": "Hire Date",
+      "salary": "Salary",
+      "commissionPct": "Commission Pct",
+      "job": "Job",
+      "department": "Department",
+      "help": {
+        "firstName": "The firstname attribute."
+      }
+    }
+  }
+}

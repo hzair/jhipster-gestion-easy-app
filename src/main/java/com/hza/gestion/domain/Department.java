@@ -36,8 +36,8 @@ public class Department implements Serializable {
      */
     @Schema(description = "A relationship")
     @OneToMany(mappedBy = "department")
-    @JsonIgnoreProperties(value = { "jobs", "manager", "department" }, allowSetters = true)
-    private Set<Employee> employees = new HashSet<>();
+    @JsonIgnoreProperties(value = { "jobs", "department" }, allowSetters = true)
+    private Set<Employee2> employee2s = new HashSet<>();
 
     // jhipster-needle-entity-add-field - JHipster will add fields here
 
@@ -80,34 +80,34 @@ public class Department implements Serializable {
         return this;
     }
 
-    public Set<Employee> getEmployees() {
-        return this.employees;
+    public Set<Employee2> getEmployee2s() {
+        return this.employee2s;
     }
 
-    public void setEmployees(Set<Employee> employees) {
-        if (this.employees != null) {
-            this.employees.forEach(i -> i.setDepartment(null));
+    public void setEmployee2s(Set<Employee2> employee2s) {
+        if (this.employee2s != null) {
+            this.employee2s.forEach(i -> i.setDepartment(null));
         }
-        if (employees != null) {
-            employees.forEach(i -> i.setDepartment(this));
+        if (employee2s != null) {
+            employee2s.forEach(i -> i.setDepartment(this));
         }
-        this.employees = employees;
+        this.employee2s = employee2s;
     }
 
-    public Department employees(Set<Employee> employees) {
-        this.setEmployees(employees);
+    public Department employee2s(Set<Employee2> employee2s) {
+        this.setEmployee2s(employee2s);
         return this;
     }
 
-    public Department addEmployee(Employee employee) {
-        this.employees.add(employee);
-        employee.setDepartment(this);
+    public Department addEmployee2(Employee2 employee2) {
+        this.employee2s.add(employee2);
+        employee2.setDepartment(this);
         return this;
     }
 
-    public Department removeEmployee(Employee employee) {
-        this.employees.remove(employee);
-        employee.setDepartment(null);
+    public Department removeEmployee2(Employee2 employee2) {
+        this.employee2s.remove(employee2);
+        employee2.setDepartment(null);
         return this;
     }
 

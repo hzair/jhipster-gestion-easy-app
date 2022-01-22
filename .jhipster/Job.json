@@ -25,7 +25,7 @@
     },
     {
       "relationshipType": "many-to-one",
-      "otherEntityName": "employee",
+      "otherEntityName": "employee2",
       "otherEntityRelationshipName": "job",
       "relationshipName": "employee"
     }

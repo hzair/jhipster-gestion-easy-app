@@ -43,8 +43,20 @@
     "clientThemeVariant": "",
     "reactive": false,
     "enableGradleEnterprise": false,
-    "entities": ["Region", "Country", "Location", "Department", "Task", "Employee", "Job", "JobHistory"],
-    "lastLiquibaseTimestamp": 1642861187000
+    "entities": [
+      "Region",
+      "Country",
+      "Location",
+      "Department",
+      "Task",
+      "Employee",
+      "Job",
+      "JobHistory",
+      "Produit",
+      "Imputation",
+      "Employee2"
+    ],
+    "lastLiquibaseTimestamp": 1642863494000
   },
   "git-provider": "GitHub",
   "git-company": "hzair",

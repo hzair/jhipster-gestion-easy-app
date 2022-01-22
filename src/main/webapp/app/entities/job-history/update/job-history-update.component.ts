@@ -28,7 +28,7 @@ export class JobHistoryUpdateComponent implements OnInit {
 
   jobsCollection: IJob[] = [];
   departmentsCollection: IDepartment[] = [];
-  employeesCollection: IEmployee[] = [];
+  employee2sCollection: IEmployee[] = [];
 
   editForm = this.fb.group({
     id: [],
@@ -37,7 +37,7 @@ export class JobHistoryUpdateComponent implements OnInit {
     language: [],
     job: [],
     department: [],
-    employee: [],
+    employee2: [],
   });
 
   constructor(
@@ -85,7 +85,7 @@ export class JobHistoryUpdateComponent implements OnInit {
     return item.id!;
   }
 
-  trackEmployeeById(index: number, item: IEmployee): number {
+  trackEmployeeById(index: number, item: IEmployee): string {
     return item.id!;
   }
 
@@ -116,7 +116,7 @@ export class JobHistoryUpdateComponent implements OnInit {
       language: jobHistory.language,
       job: jobHistory.job,
       department: jobHistory.department,
-      employee: jobHistory.employee,
+      employee2: jobHistory.employee2,
     });
 
     this.jobsCollection = this.jobService.addJobToCollectionIfMissing(this.jobsCollection, jobHistory.job);
@@ -124,7 +124,7 @@ export class JobHistoryUpdateComponent implements OnInit {
       this.departmentsCollection,
       jobHistory.department
     );
-    this.employeesCollection = this.employeeService.addEmployeeToCollectionIfMissing(this.employeesCollection, jobHistory.employee);
+    this.employee2sCollection = this.employeeService.addEmployeeToCollectionIfMissing(this.employee2sCollection, jobHistory.employee2);
   }
 
   protected loadRelationshipsOptions(): void {
@@ -149,10 +149,10 @@ export class JobHistoryUpdateComponent implements OnInit {
       .pipe(map((res: HttpResponse<IEmployee[]>) => res.body ?? []))
       .pipe(
         map((employees: IEmployee[]) =>
-          this.employeeService.addEmployeeToCollectionIfMissing(employees, this.editForm.get('employee')!.value)
+          this.employeeService.addEmployeeToCollectionIfMissing(employees, this.editForm.get('employee2')!.value)
         )
       )
-      .subscribe((employees: IEmployee[]) => (this.employeesCollection = employees));
+      .subscribe((employees: IEmployee[]) => (this.employee2sCollection = employees));
   }
 
   protected createFromForm(): IJobHistory {
@@ -164,7 +164,7 @@ export class JobHistoryUpdateComponent implements OnInit {
       language: this.editForm.get(['language'])!.value,
       job: this.editForm.get(['job'])!.value,
       department: this.editForm.get(['department'])!.value,
-      employee: this.editForm.get(['employee'])!.value,
+      employee2: this.editForm.get(['employee2'])!.value,
     };
   }
 }

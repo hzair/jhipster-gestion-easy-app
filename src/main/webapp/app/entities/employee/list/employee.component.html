@@ -32,12 +32,16 @@
     <table class="table table-striped" aria-describedby="page-heading">
       <thead>
         <tr jhiSort [(predicate)]="predicate" [(ascending)]="ascending" (sortChange)="reset()">
-          <th scope="col" jhiSortBy="id"><span jhiTranslate="global.field.id">ID</span> <fa-icon icon="sort"></fa-icon></th>
-          <th scope="col" jhiSortBy="firstName">
-            <span jhiTranslate="gestionEasyApp.employee.firstName">First Name</span> <fa-icon icon="sort"></fa-icon>
+          <th scope="col" jhiSortBy="id"><span jhiTranslate="gestionEasyApp.employee.id">Id</span> <fa-icon icon="sort"></fa-icon></th>
+          <th scope="col" jhiSortBy="matricule">
+            <span jhiTranslate="gestionEasyApp.employee.matricule">Matricule</span> <fa-icon icon="sort"></fa-icon>
           </th>
-          <th scope="col" jhiSortBy="lastName">
-            <span jhiTranslate="gestionEasyApp.employee.lastName">Last Name</span> <fa-icon icon="sort"></fa-icon>
+          <th scope="col" jhiSortBy="fonction">
+            <span jhiTranslate="gestionEasyApp.employee.fonction">Fonction</span> <fa-icon icon="sort"></fa-icon>
+          </th>
+          <th scope="col" jhiSortBy="nom"><span jhiTranslate="gestionEasyApp.employee.nom">Nom</span> <fa-icon icon="sort"></fa-icon></th>
+          <th scope="col" jhiSortBy="prenom">
+            <span jhiTranslate="gestionEasyApp.employee.prenom">Prenom</span> <fa-icon icon="sort"></fa-icon>
           </th>
           <th scope="col" jhiSortBy="email">
             <span jhiTranslate="gestionEasyApp.employee.email">Email</span> <fa-icon icon="sort"></fa-icon>
@@ -45,20 +49,17 @@
           <th scope="col" jhiSortBy="phoneNumber">
             <span jhiTranslate="gestionEasyApp.employee.phoneNumber">Phone Number</span> <fa-icon icon="sort"></fa-icon>
           </th>
-          <th scope="col" jhiSortBy="hireDate">
-            <span jhiTranslate="gestionEasyApp.employee.hireDate">Hire Date</span> <fa-icon icon="sort"></fa-icon>
+          <th scope="col" jhiSortBy="dateEmbauche">
+            <span jhiTranslate="gestionEasyApp.employee.dateEmbauche">Date Embauche</span> <fa-icon icon="sort"></fa-icon>
           </th>
-          <th scope="col" jhiSortBy="salary">
-            <span jhiTranslate="gestionEasyApp.employee.salary">Salary</span> <fa-icon icon="sort"></fa-icon>
+          <th scope="col" jhiSortBy="salaire">
+            <span jhiTranslate="gestionEasyApp.employee.salaire">Salaire</span> <fa-icon icon="sort"></fa-icon>
           </th>
           <th scope="col" jhiSortBy="commissionPct">
             <span jhiTranslate="gestionEasyApp.employee.commissionPct">Commission Pct</span> <fa-icon icon="sort"></fa-icon>
           </th>
           <th scope="col" jhiSortBy="manager.id">
             <span jhiTranslate="gestionEasyApp.employee.manager">Manager</span> <fa-icon icon="sort"></fa-icon>
-          </th>
-          <th scope="col" jhiSortBy="department.id">
-            <span jhiTranslate="gestionEasyApp.employee.department">Department</span> <fa-icon icon="sort"></fa-icon>
           </th>
           <th scope="col"></th>
         </tr>
@@ -68,21 +69,18 @@
           <td>
             <a [routerLink]="['/employee', employee.id, 'view']">{{ employee.id }}</a>
           </td>
-          <td>{{ employee.firstName }}</td>
-          <td>{{ employee.lastName }}</td>
+          <td>{{ employee.matricule }}</td>
+          <td jhiTranslate="{{ 'gestionEasyApp.Fonction.' + employee.fonction }}">{{ employee.fonction }}</td>
+          <td>{{ employee.nom }}</td>
+          <td>{{ employee.prenom }}</td>
           <td>{{ employee.email }}</td>
           <td>{{ employee.phoneNumber }}</td>
-          <td>{{ employee.hireDate | formatMediumDatetime }}</td>
-          <td>{{ employee.salary }}</td>
+          <td>{{ employee.dateEmbauche | formatMediumDatetime }}</td>
+          <td>{{ employee.salaire }}</td>
           <td>{{ employee.commissionPct }}</td>
           <td>
             <div *ngIf="employee.manager">
               <a [routerLink]="['/employee', employee.manager?.id, 'view']">{{ employee.manager?.id }}</a>
-            </div>
-          </td>
-          <td>
-            <div *ngIf="employee.department">
-              <a [routerLink]="['/department', employee.department?.id, 'view']">{{ employee.department?.id }}</a>
             </div>
           </td>
           <td class="text-right">

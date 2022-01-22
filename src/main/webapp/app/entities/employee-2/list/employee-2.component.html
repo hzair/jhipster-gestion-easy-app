@@ -1,0 +1,96 @@
+<div>
+  <h2 id="page-heading" data-cy="Employee2Heading">
+    <span jhiTranslate="gestionEasyApp.employee2.home.title">Employee 2 S</span>
+
+    <div class="d-flex justify-content-end">
+      <button class="btn btn-info mr-2" (click)="loadAll()" [disabled]="isLoading">
+        <fa-icon icon="sync" [spin]="isLoading"></fa-icon>
+        <span jhiTranslate="gestionEasyApp.employee2.home.refreshListLabel">Refresh List</span>
+      </button>
+
+      <button
+        id="jh-create-entity"
+        data-cy="entityCreateButton"
+        class="btn btn-primary jh-create-entity create-employee-2"
+        [routerLink]="['/employee-2/new']"
+      >
+        <fa-icon icon="plus"></fa-icon>
+        <span jhiTranslate="gestionEasyApp.employee2.home.createLabel"> Create a new Employee 2 </span>
+      </button>
+    </div>
+  </h2>
+
+  <jhi-alert-error></jhi-alert-error>
+
+  <jhi-alert></jhi-alert>
+
+  <div class="alert alert-warning" id="no-result" *ngIf="employee2s?.length === 0">
+    <span jhiTranslate="gestionEasyApp.employee2.home.notFound">No employee2s found</span>
+  </div>
+
+  <div class="table-responsive" id="entities" *ngIf="employee2s && employee2s.length > 0">
+    <table class="table table-striped" aria-describedby="page-heading">
+      <thead>
+        <tr>
+          <th scope="col"><span jhiTranslate="global.field.id">ID</span></th>
+          <th scope="col"><span jhiTranslate="gestionEasyApp.employee2.firstName">First Name</span></th>
+          <th scope="col"><span jhiTranslate="gestionEasyApp.employee2.lastName">Last Name</span></th>
+          <th scope="col"><span jhiTranslate="gestionEasyApp.employee2.email">Email</span></th>
+          <th scope="col"><span jhiTranslate="gestionEasyApp.employee2.phoneNumber">Phone Number</span></th>
+          <th scope="col"><span jhiTranslate="gestionEasyApp.employee2.hireDate">Hire Date</span></th>
+          <th scope="col"><span jhiTranslate="gestionEasyApp.employee2.salary">Salary</span></th>
+          <th scope="col"><span jhiTranslate="gestionEasyApp.employee2.commissionPct">Commission Pct</span></th>
+          <th scope="col"><span jhiTranslate="gestionEasyApp.employee2.department">Department</span></th>
+          <th scope="col"></th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let employee2 of employee2s; trackBy: trackId" data-cy="entityTable">
+          <td>
+            <a [routerLink]="['/employee-2', employee2.id, 'view']">{{ employee2.id }}</a>
+          </td>
+          <td>{{ employee2.firstName }}</td>
+          <td>{{ employee2.lastName }}</td>
+          <td>{{ employee2.email }}</td>
+          <td>{{ employee2.phoneNumber }}</td>
+          <td>{{ employee2.hireDate | formatMediumDatetime }}</td>
+          <td>{{ employee2.salary }}</td>
+          <td>{{ employee2.commissionPct }}</td>
+          <td>
+            <div *ngIf="employee2.department">
+              <a [routerLink]="['/department', employee2.department?.id, 'view']">{{ employee2.department?.id }}</a>
+            </div>
+          </td>
+          <td class="text-right">
+            <div class="btn-group">
+              <button
+                type="submit"
+                [routerLink]="['/employee-2', employee2.id, 'view']"
+                class="btn btn-info btn-sm"
+                data-cy="entityDetailsButton"
+              >
+                <fa-icon icon="eye"></fa-icon>
+                <span class="d-none d-md-inline" jhiTranslate="entity.action.view">View</span>
+              </button>
+
+              <button
+                type="submit"
+                [routerLink]="['/employee-2', employee2.id, 'edit']"
+                class="btn btn-primary btn-sm"
+                data-cy="entityEditButton"
+              >
+                <fa-icon icon="pencil-alt"></fa-icon>
+                <span class="d-none d-md-inline" jhiTranslate="entity.action.edit">Edit</span>
+              </button>
+
+              <button type="submit" (click)="delete(employee2)" class="btn btn-danger btn-sm" data-cy="entityDeleteButton">
+                <fa-icon icon="times"></fa-icon>
+                <span class="d-none d-md-inline" jhiTranslate="entity.action.delete">Delete</span>
+              </button>
+            </div>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>

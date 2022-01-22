@@ -60,7 +60,7 @@ public class EmployeeResource {
         Employee result = employeeRepository.save(employee);
         return ResponseEntity
             .created(new URI("/api/employees/" + result.getId()))
-            .headers(HeaderUtil.createEntityCreationAlert(applicationName, true, ENTITY_NAME, result.getId().toString()))
+            .headers(HeaderUtil.createEntityCreationAlert(applicationName, true, ENTITY_NAME, result.getId()))
             .body(result);
     }
 
@@ -76,7 +76,7 @@ public class EmployeeResource {
      */
     @PutMapping("/employees/{id}")
     public ResponseEntity<Employee> updateEmployee(
-        @PathVariable(value = "id", required = false) final Long id,
+        @PathVariable(value = "id", required = false) final String id,
         @RequestBody Employee employee
     ) throws URISyntaxException {
         log.debug("REST request to update Employee : {}, {}", id, employee);
@@ -94,7 +94,7 @@ public class EmployeeResource {
         Employee result = employeeRepository.save(employee);
         return ResponseEntity
             .ok()
-            .headers(HeaderUtil.createEntityUpdateAlert(applicationName, true, ENTITY_NAME, employee.getId().toString()))
+            .headers(HeaderUtil.createEntityUpdateAlert(applicationName, true, ENTITY_NAME, employee.getId()))
             .body(result);
     }
 
@@ -111,7 +111,7 @@ public class EmployeeResource {
      */
     @PatchMapping(value = "/employees/{id}", consumes = { "application/json", "application/merge-patch+json" })
     public ResponseEntity<Employee> partialUpdateEmployee(
-        @PathVariable(value = "id", required = false) final Long id,
+        @PathVariable(value = "id", required = false) final String id,
         @RequestBody Employee employee
     ) throws URISyntaxException {
         log.debug("REST request to partial update Employee partially : {}, {}", id, employee);
@@ -129,11 +129,17 @@ public class EmployeeResource {
         Optional<Employee> result = employeeRepository
             .findById(employee.getId())
             .map(existingEmployee -> {
-                if (employee.getFirstName() != null) {
-                    existingEmployee.setFirstName(employee.getFirstName());
+                if (employee.getMatricule() != null) {
+                    existingEmployee.setMatricule(employee.getMatricule());
                 }
-                if (employee.getLastName() != null) {
-                    existingEmployee.setLastName(employee.getLastName());
+                if (employee.getFonction() != null) {
+                    existingEmployee.setFonction(employee.getFonction());
+                }
+                if (employee.getNom() != null) {
+                    existingEmployee.setNom(employee.getNom());
+                }
+                if (employee.getPrenom() != null) {
+                    existingEmployee.setPrenom(employee.getPrenom());
                 }
                 if (employee.getEmail() != null) {
                     existingEmployee.setEmail(employee.getEmail());
@@ -141,11 +147,11 @@ public class EmployeeResource {
                 if (employee.getPhoneNumber() != null) {
                     existingEmployee.setPhoneNumber(employee.getPhoneNumber());
                 }
-                if (employee.getHireDate() != null) {
-                    existingEmployee.setHireDate(employee.getHireDate());
+                if (employee.getDateEmbauche() != null) {
+                    existingEmployee.setDateEmbauche(employee.getDateEmbauche());
                 }
-                if (employee.getSalary() != null) {
-                    existingEmployee.setSalary(employee.getSalary());
+                if (employee.getSalaire() != null) {
+                    existingEmployee.setSalaire(employee.getSalaire());
                 }
                 if (employee.getCommissionPct() != null) {
                     existingEmployee.setCommissionPct(employee.getCommissionPct());
@@ -157,7 +163,7 @@ public class EmployeeResource {
 
         return ResponseUtil.wrapOrNotFound(
             result,
-            HeaderUtil.createEntityUpdateAlert(applicationName, true, ENTITY_NAME, employee.getId().toString())
+            HeaderUtil.createEntityUpdateAlert(applicationName, true, ENTITY_NAME, employee.getId())
         );
     }
 
@@ -182,7 +188,7 @@ public class EmployeeResource {
      * @return the {@link ResponseEntity} with status {@code 200 (OK)} and with body the employee, or with status {@code 404 (Not Found)}.
      */
     @GetMapping("/employees/{id}")
-    public ResponseEntity<Employee> getEmployee(@PathVariable Long id) {
+    public ResponseEntity<Employee> getEmployee(@PathVariable String id) {
         log.debug("REST request to get Employee : {}", id);
         Optional<Employee> employee = employeeRepository.findById(id);
         return ResponseUtil.wrapOrNotFound(employee);
@@ -195,12 +201,9 @@ public class EmployeeResource {
      * @return the {@link ResponseEntity} with status {@code 204 (NO_CONTENT)}.
      */
     @DeleteMapping("/employees/{id}")
-    public ResponseEntity<Void> deleteEmployee(@PathVariable Long id) {
+    public ResponseEntity<Void> deleteEmployee(@PathVariable String id) {
         log.debug("REST request to delete Employee : {}", id);
         employeeRepository.deleteById(id);
-        return ResponseEntity
-            .noContent()
-            .headers(HeaderUtil.createEntityDeletionAlert(applicationName, true, ENTITY_NAME, id.toString()))
-            .build();
+        return ResponseEntity.noContent().headers(HeaderUtil.createEntityDeletionAlert(applicationName, true, ENTITY_NAME, id)).build();
     }
 }

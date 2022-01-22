@@ -9,8 +9,8 @@ import { IJob, Job } from '../job.model';
 import { JobService } from '../service/job.service';
 import { ITask } from 'app/entities/task/task.model';
 import { TaskService } from 'app/entities/task/service/task.service';
-import { IEmployee } from 'app/entities/employee/employee.model';
-import { EmployeeService } from 'app/entities/employee/service/employee.service';
+import { IEmployee2 } from 'app/entities/employee-2/employee-2.model';
+import { Employee2Service } from 'app/entities/employee-2/service/employee-2.service';
 
 @Component({
   selector: 'jhi-job-update',
@@ -20,7 +20,7 @@ export class JobUpdateComponent implements OnInit {
   isSaving = false;
 
   tasksSharedCollection: ITask[] = [];
-  employeesSharedCollection: IEmployee[] = [];
+  employee2sSharedCollection: IEmployee2[] = [];
 
   editForm = this.fb.group({
     id: [],
@@ -34,7 +34,7 @@ export class JobUpdateComponent implements OnInit {
   constructor(
     protected jobService: JobService,
     protected taskService: TaskService,
-    protected employeeService: EmployeeService,
+    protected employee2Service: Employee2Service,
     protected activatedRoute: ActivatedRoute,
     protected fb: FormBuilder
   ) {}
@@ -65,7 +65,7 @@ export class JobUpdateComponent implements OnInit {
     return item.id!;
   }
 
-  trackEmployeeById(index: number, item: IEmployee): number {
+  trackEmployee2ById(index: number, item: IEmployee2): number {
     return item.id!;
   }
 
@@ -110,7 +110,10 @@ export class JobUpdateComponent implements OnInit {
     });
 
     this.tasksSharedCollection = this.taskService.addTaskToCollectionIfMissing(this.tasksSharedCollection, ...(job.tasks ?? []));
-    this.employeesSharedCollection = this.employeeService.addEmployeeToCollectionIfMissing(this.employeesSharedCollection, job.employee);
+    this.employee2sSharedCollection = this.employee2Service.addEmployee2ToCollectionIfMissing(
+      this.employee2sSharedCollection,
+      job.employee
+    );
   }
 
   protected loadRelationshipsOptions(): void {
@@ -120,15 +123,15 @@ export class JobUpdateComponent implements OnInit {
       .pipe(map((tasks: ITask[]) => this.taskService.addTaskToCollectionIfMissing(tasks, ...(this.editForm.get('tasks')!.value ?? []))))
       .subscribe((tasks: ITask[]) => (this.tasksSharedCollection = tasks));
 
-    this.employeeService
+    this.employee2Service
       .query()
-      .pipe(map((res: HttpResponse<IEmployee[]>) => res.body ?? []))
+      .pipe(map((res: HttpResponse<IEmployee2[]>) => res.body ?? []))
       .pipe(
-        map((employees: IEmployee[]) =>
-          this.employeeService.addEmployeeToCollectionIfMissing(employees, this.editForm.get('employee')!.value)
+        map((employee2s: IEmployee2[]) =>
+          this.employee2Service.addEmployee2ToCollectionIfMissing(employee2s, this.editForm.get('employee')!.value)
         )
       )
-      .subscribe((employees: IEmployee[]) => (this.employeesSharedCollection = employees));
+      .subscribe((employee2s: IEmployee2[]) => (this.employee2sSharedCollection = employee2s));
   }
 
   protected createFromForm(): IJob {

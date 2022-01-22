@@ -34,7 +34,7 @@
       "relationshipType": "one-to-one",
       "otherEntityName": "employee",
       "otherEntityRelationshipName": "jobHistory",
-      "relationshipName": "employee",
+      "relationshipName": "employee2",
       "ownerSide": true
     }
   ],

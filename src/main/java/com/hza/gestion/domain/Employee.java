@@ -1,17 +1,14 @@
 package com.hza.gestion.domain;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import io.swagger.v3.oas.annotations.media.Schema;
+import com.hza.gestion.domain.enumeration.Fonction;
 import java.io.Serializable;
 import java.time.Instant;
-import java.util.HashSet;
-import java.util.Set;
 import javax.persistence.*;
 
 /**
- * The Employee entity.
+ * A Employee.
  */
-@Schema(description = "The Employee entity.")
 @Entity
 @Table(name = "employee")
 public class Employee implements Serializable {
@@ -19,19 +16,21 @@ public class Employee implements Serializable {
     private static final long serialVersionUID = 1L;
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
-    private Long id;
+    private String id;
 
-    /**
-     * The firstname attribute.
-     */
-    @Schema(description = "The firstname attribute.")
-    @Column(name = "first_name")
-    private String firstName;
+    @Column(name = "matricule")
+    private String matricule;
 
-    @Column(name = "last_name")
-    private String lastName;
+    @Enumerated(EnumType.STRING)
+    @Column(name = "fonction")
+    private Fonction fonction;
+
+    @Column(name = "nom")
+    private String nom;
+
+    @Column(name = "prenom")
+    private String prenom;
 
     @Column(name = "email")
     private String email;
@@ -39,70 +38,84 @@ public class Employee implements Serializable {
     @Column(name = "phone_number")
     private String phoneNumber;
 
-    @Column(name = "hire_date")
-    private Instant hireDate;
+    @Column(name = "date_embauche")
+    private Instant dateEmbauche;
 
-    @Column(name = "salary")
-    private Long salary;
+    @Column(name = "salaire")
+    private Long salaire;
 
     @Column(name = "commission_pct")
     private Long commissionPct;
 
-    @OneToMany(mappedBy = "employee")
-    @JsonIgnoreProperties(value = { "tasks", "employee" }, allowSetters = true)
-    private Set<Job> jobs = new HashSet<>();
-
     @ManyToOne
-    @JsonIgnoreProperties(value = { "jobs", "manager", "department" }, allowSetters = true)
+    @JsonIgnoreProperties(value = { "manager" }, allowSetters = true)
     private Employee manager;
-
-    /**
-     * Another side of the same relationship
-     */
-    @Schema(description = "Another side of the same relationship")
-    @ManyToOne
-    @JsonIgnoreProperties(value = { "location", "employees" }, allowSetters = true)
-    private Department department;
 
     // jhipster-needle-entity-add-field - JHipster will add fields here
 
-    public Long getId() {
+    public String getId() {
         return this.id;
     }
 
-    public Employee id(Long id) {
+    public Employee id(String id) {
         this.setId(id);
         return this;
     }
 
-    public void setId(Long id) {
+    public void setId(String id) {
         this.id = id;
     }
 
-    public String getFirstName() {
-        return this.firstName;
+    public String getMatricule() {
+        return this.matricule;
     }
 
-    public Employee firstName(String firstName) {
-        this.setFirstName(firstName);
+    public Employee matricule(String matricule) {
+        this.setMatricule(matricule);
         return this;
     }
 
-    public void setFirstName(String firstName) {
-        this.firstName = firstName;
+    public void setMatricule(String matricule) {
+        this.matricule = matricule;
     }
 
-    public String getLastName() {
-        return this.lastName;
+    public Fonction getFonction() {
+        return this.fonction;
     }
 
-    public Employee lastName(String lastName) {
-        this.setLastName(lastName);
+    public Employee fonction(Fonction fonction) {
+        this.setFonction(fonction);
         return this;
     }
 
-    public void setLastName(String lastName) {
-        this.lastName = lastName;
+    public void setFonction(Fonction fonction) {
+        this.fonction = fonction;
+    }
+
+    public String getNom() {
+        return this.nom;
+    }
+
+    public Employee nom(String nom) {
+        this.setNom(nom);
+        return this;
+    }
+
+    public void setNom(String nom) {
+        this.nom = nom;
+    }
+
+    public String getPrenom() {
+        return this.prenom;
+    }
+
+    public Employee prenom(String prenom) {
+        this.setPrenom(prenom);
+        return this;
+    }
+
+    public void setPrenom(String prenom) {
+        this.prenom = prenom;
     }
 
     public String getEmail() {
@@ -131,30 +144,30 @@ public class Employee implements Serializable {
         this.phoneNumber = phoneNumber;
     }
 
-    public Instant getHireDate() {
-        return this.hireDate;
+    public Instant getDateEmbauche() {
+        return this.dateEmbauche;
     }
 
-    public Employee hireDate(Instant hireDate) {
-        this.setHireDate(hireDate);
+    public Employee dateEmbauche(Instant dateEmbauche) {
+        this.setDateEmbauche(dateEmbauche);
         return this;
     }
 
-    public void setHireDate(Instant hireDate) {
-        this.hireDate = hireDate;
+    public void setDateEmbauche(Instant dateEmbauche) {
+        this.dateEmbauche = dateEmbauche;
     }
 
-    public Long getSalary() {
-        return this.salary;
+    public Long getSalaire() {
+        return this.salaire;
     }
 
-    public Employee salary(Long salary) {
-        this.setSalary(salary);
+    public Employee salaire(Long salaire) {
+        this.setSalaire(salaire);
         return this;
     }
 
-    public void setSalary(Long salary) {
-        this.salary = salary;
+    public void setSalaire(Long salaire) {
+        this.salaire = salaire;
     }
 
     public Long getCommissionPct() {
@@ -170,37 +183,6 @@ public class Employee implements Serializable {
         this.commissionPct = commissionPct;
     }
 
-    public Set<Job> getJobs() {
-        return this.jobs;
-    }
-
-    public void setJobs(Set<Job> jobs) {
-        if (this.jobs != null) {
-            this.jobs.forEach(i -> i.setEmployee(null));
-        }
-        if (jobs != null) {
-            jobs.forEach(i -> i.setEmployee(this));
-        }
-        this.jobs = jobs;
-    }
-
-    public Employee jobs(Set<Job> jobs) {
-        this.setJobs(jobs);
-        return this;
-    }
-
-    public Employee addJob(Job job) {
-        this.jobs.add(job);
-        job.setEmployee(this);
-        return this;
-    }
-
-    public Employee removeJob(Job job) {
-        this.jobs.remove(job);
-        job.setEmployee(null);
-        return this;
-    }
-
     public Employee getManager() {
         return this.manager;
     }
@@ -211,19 +193,6 @@ public class Employee implements Serializable {
 
     public Employee manager(Employee employee) {
         this.setManager(employee);
-        return this;
-    }
-
-    public Department getDepartment() {
-        return this.department;
-    }
-
-    public void setDepartment(Department department) {
-        this.department = department;
-    }
-
-    public Employee department(Department department) {
-        this.setDepartment(department);
         return this;
     }
 
@@ -251,12 +220,14 @@ public class Employee implements Serializable {
     public String toString() {
         return "Employee{" +
             "id=" + getId() +
-            ", firstName='" + getFirstName() + "'" +
-            ", lastName='" + getLastName() + "'" +
+            ", matricule='" + getMatricule() + "'" +
+            ", fonction='" + getFonction() + "'" +
+            ", nom='" + getNom() + "'" +
+            ", prenom='" + getPrenom() + "'" +
             ", email='" + getEmail() + "'" +
             ", phoneNumber='" + getPhoneNumber() + "'" +
-            ", hireDate='" + getHireDate() + "'" +
-            ", salary=" + getSalary() +
+            ", dateEmbauche='" + getDateEmbauche() + "'" +
+            ", salaire=" + getSalaire() +
             ", commissionPct=" + getCommissionPct() +
             "}";
     }

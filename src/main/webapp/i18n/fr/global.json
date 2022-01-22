@@ -15,6 +15,9 @@
         "employee": "Employee",
         "job": "Job",
         "jobHistory": "Job History",
+        "produit": "Produit",
+        "imputation": "Imputation",
+        "employee2": "Employee 2",
         "jhipster-needle-menu-add-entry": "JHipster will add additional entities here (do not translate!)"
       },
       "account": {
