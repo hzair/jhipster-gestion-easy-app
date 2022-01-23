@@ -1,0 +1,31 @@
+{
+  "gestionEasyApp": {
+    "vendeur": {
+      "home": {
+        "title": "Vendeurs",
+        "refreshListLabel": "Refresh list",
+        "createLabel": "Create a new Vendeur",
+        "createOrEditLabel": "Create or edit a Vendeur",
+        "notFound": "No Vendeurs found"
+      },
+      "created": "A new Vendeur is created with identifier {{ param }}",
+      "updated": "A Vendeur is updated with identifier {{ param }}",
+      "deleted": "A Vendeur is deleted with identifier {{ param }}",
+      "delete": {
+        "question": "Are you sure you want to delete Vendeur {{ id }}?"
+      },
+      "detail": {
+        "title": "Vendeur"
+      },
+      "id": "ID",
+      "matricule": "Matricule",
+      "nom": "Nom",
+      "prenom": "Prenom",
+      "email": "Email",
+      "adresse": "Adresse",
+      "phoneNumber": "Phone Number",
+      "salaire": "Salaire",
+      "image": "Image"
+    }
+  }
+}

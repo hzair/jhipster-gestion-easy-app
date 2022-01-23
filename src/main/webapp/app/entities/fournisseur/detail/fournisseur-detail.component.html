@@ -1,0 +1,65 @@
+<div class="row justify-content-center">
+  <div class="col-8">
+    <div *ngIf="fournisseur">
+      <h2 data-cy="fournisseurDetailsHeading"><span jhiTranslate="gestionEasyApp.fournisseur.detail.title">Fournisseur</span></h2>
+
+      <hr />
+
+      <jhi-alert-error></jhi-alert-error>
+
+      <jhi-alert></jhi-alert>
+
+      <dl class="row-md jh-entity-details">
+        <dt><span jhiTranslate="global.field.id">ID</span></dt>
+        <dd>
+          <span>{{ fournisseur.id }}</span>
+        </dd>
+        <dt><span jhiTranslate="gestionEasyApp.fournisseur.matricule">Matricule</span></dt>
+        <dd>
+          <span>{{ fournisseur.matricule }}</span>
+        </dd>
+        <dt><span jhiTranslate="gestionEasyApp.fournisseur.nom">Nom</span></dt>
+        <dd>
+          <span>{{ fournisseur.nom }}</span>
+        </dd>
+        <dt><span jhiTranslate="gestionEasyApp.fournisseur.prenom">Prenom</span></dt>
+        <dd>
+          <span>{{ fournisseur.prenom }}</span>
+        </dd>
+        <dt><span jhiTranslate="gestionEasyApp.fournisseur.email">Email</span></dt>
+        <dd>
+          <span>{{ fournisseur.email }}</span>
+        </dd>
+        <dt><span jhiTranslate="gestionEasyApp.fournisseur.adresse">Adresse</span></dt>
+        <dd>
+          <span>{{ fournisseur.adresse }}</span>
+        </dd>
+        <dt><span jhiTranslate="gestionEasyApp.fournisseur.phoneNumber">Phone Number</span></dt>
+        <dd>
+          <span>{{ fournisseur.phoneNumber }}</span>
+        </dd>
+        <dt><span jhiTranslate="gestionEasyApp.fournisseur.image">Image</span></dt>
+        <dd>
+          <div *ngIf="fournisseur.image">
+            <a (click)="openFile(fournisseur.image, fournisseur.imageContentType)">
+              <img
+                [src]="'data:' + fournisseur.imageContentType + ';base64,' + fournisseur.image"
+                style="max-width: 100%"
+                alt="fournisseur image"
+              />
+            </a>
+            {{ fournisseur.imageContentType }}, {{ byteSize(fournisseur.image) }}
+          </div>
+        </dd>
+      </dl>
+
+      <button type="submit" (click)="previousState()" class="btn btn-info" data-cy="entityDetailsBackButton">
+        <fa-icon icon="arrow-left"></fa-icon>&nbsp;<span jhiTranslate="entity.action.back">Back</span>
+      </button>
+
+      <button type="button" [routerLink]="['/fournisseur', fournisseur.id, 'edit']" class="btn btn-primary">
+        <fa-icon icon="pencil-alt"></fa-icon>&nbsp;<span jhiTranslate="entity.action.edit">Edit</span>
+      </button>
+    </div>
+  </div>
+</div>

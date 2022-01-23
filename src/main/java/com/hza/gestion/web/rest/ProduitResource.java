@@ -9,12 +9,20 @@ import java.net.URISyntaxException;
 import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
+import javax.validation.Valid;
+import javax.validation.constraints.NotNull;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 import tech.jhipster.web.util.HeaderUtil;
+import tech.jhipster.web.util.PaginationUtil;
 import tech.jhipster.web.util.ResponseUtil;
 
 /**
@@ -48,7 +56,7 @@ public class ProduitResource {
      * @throws URISyntaxException if the Location URI syntax is incorrect.
      */
     @PostMapping("/produits")
-    public ResponseEntity<Produit> createProduit(@RequestBody Produit produit) throws URISyntaxException {
+    public ResponseEntity<Produit> createProduit(@Valid @RequestBody Produit produit) throws URISyntaxException {
         log.debug("REST request to save Produit : {}", produit);
         if (produit.getId() != null) {
             throw new BadRequestAlertException("A new produit cannot already have an ID", ENTITY_NAME, "idexists");
@@ -56,7 +64,7 @@ public class ProduitResource {
         Produit result = produitService.save(produit);
         return ResponseEntity
             .created(new URI("/api/produits/" + result.getId()))
-            .headers(HeaderUtil.createEntityCreationAlert(applicationName, true, ENTITY_NAME, result.getId()))
+            .headers(HeaderUtil.createEntityCreationAlert(applicationName, true, ENTITY_NAME, result.getId().toString()))
             .body(result);
     }
 
@@ -72,8 +80,8 @@ public class ProduitResource {
      */
     @PutMapping("/produits/{id}")
     public ResponseEntity<Produit> updateProduit(
-        @PathVariable(value = "id", required = false) final String id,
-        @RequestBody Produit produit
+        @PathVariable(value = "id", required = false) final Long id,
+        @Valid @RequestBody Produit produit
     ) throws URISyntaxException {
         log.debug("REST request to update Produit : {}, {}", id, produit);
         if (produit.getId() == null) {
@@ -90,7 +98,7 @@ public class ProduitResource {
         Produit result = produitService.save(produit);
         return ResponseEntity
             .ok()
-            .headers(HeaderUtil.createEntityUpdateAlert(applicationName, true, ENTITY_NAME, produit.getId()))
+            .headers(HeaderUtil.createEntityUpdateAlert(applicationName, true, ENTITY_NAME, produit.getId().toString()))
             .body(result);
     }
 
@@ -107,8 +115,8 @@ public class ProduitResource {
      */
     @PatchMapping(value = "/produits/{id}", consumes = { "application/json", "application/merge-patch+json" })
     public ResponseEntity<Produit> partialUpdateProduit(
-        @PathVariable(value = "id", required = false) final String id,
-        @RequestBody Produit produit
+        @PathVariable(value = "id", required = false) final Long id,
+        @NotNull @RequestBody Produit produit
     ) throws URISyntaxException {
         log.debug("REST request to partial update Produit partially : {}, {}", id, produit);
         if (produit.getId() == null) {
@@ -124,18 +132,24 @@ public class ProduitResource {
 
         Optional<Produit> result = produitService.partialUpdate(produit);
 
-        return ResponseUtil.wrapOrNotFound(result, HeaderUtil.createEntityUpdateAlert(applicationName, true, ENTITY_NAME, produit.getId()));
+        return ResponseUtil.wrapOrNotFound(
+            result,
+            HeaderUtil.createEntityUpdateAlert(applicationName, true, ENTITY_NAME, produit.getId().toString())
+        );
     }
 
     /**
      * {@code GET  /produits} : get all the produits.
      *
+     * @param pageable the pagination information.
      * @return the {@link ResponseEntity} with status {@code 200 (OK)} and the list of produits in body.
      */
     @GetMapping("/produits")
-    public List<Produit> getAllProduits() {
-        log.debug("REST request to get all Produits");
-        return produitService.findAll();
+    public ResponseEntity<List<Produit>> getAllProduits(@org.springdoc.api.annotations.ParameterObject Pageable pageable) {
+        log.debug("REST request to get a page of Produits");
+        Page<Produit> page = produitService.findAll(pageable);
+        HttpHeaders headers = PaginationUtil.generatePaginationHttpHeaders(ServletUriComponentsBuilder.fromCurrentRequest(), page);
+        return ResponseEntity.ok().headers(headers).body(page.getContent());
     }
 
     /**
@@ -145,7 +159,7 @@ public class ProduitResource {
      * @return the {@link ResponseEntity} with status {@code 200 (OK)} and with body the produit, or with status {@code 404 (Not Found)}.
      */
     @GetMapping("/produits/{id}")
-    public ResponseEntity<Produit> getProduit(@PathVariable String id) {
+    public ResponseEntity<Produit> getProduit(@PathVariable Long id) {
         log.debug("REST request to get Produit : {}", id);
         Optional<Produit> produit = produitService.findOne(id);
         return ResponseUtil.wrapOrNotFound(produit);
@@ -158,9 +172,12 @@ public class ProduitResource {
      * @return the {@link ResponseEntity} with status {@code 204 (NO_CONTENT)}.
      */
     @DeleteMapping("/produits/{id}")
-    public ResponseEntity<Void> deleteProduit(@PathVariable String id) {
+    public ResponseEntity<Void> deleteProduit(@PathVariable Long id) {
         log.debug("REST request to delete Produit : {}", id);
         produitService.delete(id);
-        return ResponseEntity.noContent().headers(HeaderUtil.createEntityDeletionAlert(applicationName, true, ENTITY_NAME, id)).build();
+        return ResponseEntity
+            .noContent()
+            .headers(HeaderUtil.createEntityDeletionAlert(applicationName, true, ENTITY_NAME, id.toString()))
+            .build();
     }
 }

@@ -2,20 +2,13 @@
   "name": "Produit",
   "fields": [
     {
-      "fieldName": "id",
-      "fieldType": "String"
-    },
-    {
       "fieldName": "idFonc",
       "fieldType": "String"
     },
     {
-      "fieldName": "idFournisseur",
-      "fieldType": "String"
-    },
-    {
-      "fieldName": "nom",
-      "fieldType": "String"
+      "fieldName": "designation",
+      "fieldType": "String",
+      "fieldValidateRules": ["required"]
     },
     {
       "fieldName": "description",
@@ -23,21 +16,50 @@
     },
     {
       "fieldName": "quantite",
-      "fieldType": "Integer"
+      "fieldType": "Integer",
+      "fieldValidateRules": ["required"]
+    },
+    {
+      "fieldName": "prixAchat",
+      "fieldType": "Long",
+      "fieldValidateRules": ["required"]
+    },
+    {
+      "fieldName": "prixVente",
+      "fieldType": "Long",
+      "fieldValidateRules": ["required"]
+    },
+    {
+      "fieldName": "prixVenteGros",
+      "fieldType": "Long"
     },
     {
       "fieldName": "image",
-      "fieldType": "String"
+      "fieldType": "byte[]",
+      "fieldTypeBlobContent": "image"
     },
     {
-      "fieldName": "dateExpiration",
+      "fieldName": "date",
       "fieldType": "Instant"
     }
   ],
-  "relationships": [],
+  "relationships": [
+    {
+      "relationshipType": "many-to-one",
+      "otherEntityName": "fournisseur",
+      "otherEntityRelationshipName": "produit",
+      "relationshipName": "fournisseur"
+    },
+    {
+      "relationshipType": "many-to-one",
+      "otherEntityName": "sortie",
+      "otherEntityRelationshipName": "produit",
+      "relationshipName": "sortie"
+    }
+  ],
   "entityTableName": "produit",
   "dto": "no",
-  "pagination": "no",
+  "pagination": "infinite-scroll",
   "service": "serviceImpl",
   "jpaMetamodelFiltering": false,
   "fluentMethods": true,

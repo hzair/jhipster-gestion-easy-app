@@ -1,0 +1,34 @@
+{
+  "name": "Camion",
+  "fields": [
+    {
+      "fieldName": "date",
+      "fieldType": "Instant"
+    }
+  ],
+  "relationships": [
+    {
+      "relationshipType": "one-to-one",
+      "otherEntityName": "vendeur",
+      "otherEntityRelationshipName": "camion",
+      "relationshipName": "vendeur",
+      "ownerSide": true
+    },
+    {
+      "relationshipType": "one-to-many",
+      "otherEntityName": "sortie",
+      "otherEntityRelationshipName": "camion",
+      "relationshipName": "produit"
+    }
+  ],
+  "entityTableName": "camion",
+  "dto": "no",
+  "pagination": "no",
+  "service": "serviceImpl",
+  "jpaMetamodelFiltering": false,
+  "fluentMethods": true,
+  "readOnly": false,
+  "embedded": false,
+  "applications": "*",
+  "changelogDate": "20220123121417"
+}

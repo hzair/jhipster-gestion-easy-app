@@ -17,14 +17,18 @@
       "detail": {
         "title": "Produit"
       },
-      "id": "Id",
+      "id": "ID",
       "idFonc": "Id Fonc",
-      "idFournisseur": "Id Fournisseur",
-      "nom": "Nom",
+      "designation": "Designation",
       "description": "Description",
       "quantite": "Quantite",
+      "prixAchat": "Prix Achat",
+      "prixVente": "Prix Vente",
+      "prixVenteGros": "Prix Vente Gros",
       "image": "Image",
-      "dateExpiration": "Date Expiration"
+      "date": "Date",
+      "fournisseur": "Fournisseur",
+      "sortie": "Sortie"
     }
   }
 }

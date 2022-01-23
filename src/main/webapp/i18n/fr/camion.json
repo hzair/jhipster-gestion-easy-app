@@ -1,0 +1,26 @@
+{
+  "gestionEasyApp": {
+    "camion": {
+      "home": {
+        "title": "Camions",
+        "refreshListLabel": "Actualiser la liste",
+        "createLabel": "Créer un nouveau Camion",
+        "createOrEditLabel": "Créer ou éditer un Camion",
+        "notFound": "Aucun Camion trouvé"
+      },
+      "created": "Un nouveau Camion a été créé avec l'identifiant {{ param }}",
+      "updated": "Le Camion avec l'identifiant {{ param }} a été mis à jour",
+      "deleted": "Le Camion avec l'identifiant {{ param }} a été supprimé",
+      "delete": {
+        "question": "Etes-vous certain de vouloir supprimer le Camion {{ id }} ?"
+      },
+      "detail": {
+        "title": "Camion"
+      },
+      "id": "ID",
+      "date": "Date",
+      "vendeur": "Vendeur",
+      "produit": "Produit"
+    }
+  }
+}

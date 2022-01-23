@@ -1,0 +1,27 @@
+{
+  "gestionEasyApp": {
+    "sortie": {
+      "home": {
+        "title": "Sorties",
+        "refreshListLabel": "Refresh list",
+        "createLabel": "Create a new Sortie",
+        "createOrEditLabel": "Create or edit a Sortie",
+        "notFound": "No Sorties found"
+      },
+      "created": "A new Sortie is created with identifier {{ param }}",
+      "updated": "A Sortie is updated with identifier {{ param }}",
+      "deleted": "A Sortie is deleted with identifier {{ param }}",
+      "delete": {
+        "question": "Are you sure you want to delete Sortie {{ id }}?"
+      },
+      "detail": {
+        "title": "Sortie"
+      },
+      "id": "ID",
+      "quantite": "Quantite",
+      "date": "Date",
+      "produit": "Produit",
+      "camion": "Camion"
+    }
+  }
+}

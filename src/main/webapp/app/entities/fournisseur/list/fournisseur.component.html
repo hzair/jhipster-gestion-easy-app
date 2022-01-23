@@ -1,0 +1,113 @@
+<div>
+  <h2 id="page-heading" data-cy="FournisseurHeading">
+    <span jhiTranslate="gestionEasyApp.fournisseur.home.title">Fournisseurs</span>
+
+    <div class="d-flex justify-content-end">
+      <button class="btn btn-info mr-2" (click)="reset()" [disabled]="isLoading">
+        <fa-icon icon="sync" [spin]="isLoading"></fa-icon>
+        <span jhiTranslate="gestionEasyApp.fournisseur.home.refreshListLabel">Refresh List</span>
+      </button>
+
+      <button
+        id="jh-create-entity"
+        data-cy="entityCreateButton"
+        class="btn btn-primary jh-create-entity create-fournisseur"
+        [routerLink]="['/fournisseur/new']"
+      >
+        <fa-icon icon="plus"></fa-icon>
+        <span jhiTranslate="gestionEasyApp.fournisseur.home.createLabel"> Create a new Fournisseur </span>
+      </button>
+    </div>
+  </h2>
+
+  <jhi-alert-error></jhi-alert-error>
+
+  <jhi-alert></jhi-alert>
+
+  <div class="alert alert-warning" id="no-result" *ngIf="fournisseurs?.length === 0">
+    <span jhiTranslate="gestionEasyApp.fournisseur.home.notFound">No fournisseurs found</span>
+  </div>
+
+  <div class="table-responsive" id="entities" *ngIf="fournisseurs && fournisseurs.length > 0">
+    <table class="table table-striped" aria-describedby="page-heading">
+      <thead>
+        <tr jhiSort [(predicate)]="predicate" [(ascending)]="ascending" (sortChange)="reset()">
+          <th scope="col" jhiSortBy="id"><span jhiTranslate="global.field.id">ID</span> <fa-icon icon="sort"></fa-icon></th>
+          <th scope="col" jhiSortBy="matricule">
+            <span jhiTranslate="gestionEasyApp.fournisseur.matricule">Matricule</span> <fa-icon icon="sort"></fa-icon>
+          </th>
+          <th scope="col" jhiSortBy="nom">
+            <span jhiTranslate="gestionEasyApp.fournisseur.nom">Nom</span> <fa-icon icon="sort"></fa-icon>
+          </th>
+          <th scope="col" jhiSortBy="prenom">
+            <span jhiTranslate="gestionEasyApp.fournisseur.prenom">Prenom</span> <fa-icon icon="sort"></fa-icon>
+          </th>
+          <th scope="col" jhiSortBy="email">
+            <span jhiTranslate="gestionEasyApp.fournisseur.email">Email</span> <fa-icon icon="sort"></fa-icon>
+          </th>
+          <th scope="col" jhiSortBy="adresse">
+            <span jhiTranslate="gestionEasyApp.fournisseur.adresse">Adresse</span> <fa-icon icon="sort"></fa-icon>
+          </th>
+          <th scope="col" jhiSortBy="phoneNumber">
+            <span jhiTranslate="gestionEasyApp.fournisseur.phoneNumber">Phone Number</span> <fa-icon icon="sort"></fa-icon>
+          </th>
+          <th scope="col" jhiSortBy="image">
+            <span jhiTranslate="gestionEasyApp.fournisseur.image">Image</span> <fa-icon icon="sort"></fa-icon>
+          </th>
+          <th scope="col"></th>
+        </tr>
+      </thead>
+      <tbody infinite-scroll (scrolled)="loadPage(page + 1)" [infiniteScrollDisabled]="page >= links['last']" [infiniteScrollDistance]="0">
+        <tr *ngFor="let fournisseur of fournisseurs; trackBy: trackId" data-cy="entityTable">
+          <td>
+            <a [routerLink]="['/fournisseur', fournisseur.id, 'view']">{{ fournisseur.id }}</a>
+          </td>
+          <td>{{ fournisseur.matricule }}</td>
+          <td>{{ fournisseur.nom }}</td>
+          <td>{{ fournisseur.prenom }}</td>
+          <td>{{ fournisseur.email }}</td>
+          <td>{{ fournisseur.adresse }}</td>
+          <td>{{ fournisseur.phoneNumber }}</td>
+          <td>
+            <a *ngIf="fournisseur.image" (click)="openFile(fournisseur.image, fournisseur.imageContentType)">
+              <img
+                [src]="'data:' + fournisseur.imageContentType + ';base64,' + fournisseur.image"
+                style="max-height: 30px"
+                alt="fournisseur image"
+              />
+            </a>
+            <span *ngIf="fournisseur.image">{{ fournisseur.imageContentType }}, {{ byteSize(fournisseur.image) }}</span>
+          </td>
+          <td class="text-right">
+            <div class="btn-group">
+              <button
+                type="submit"
+                [routerLink]="['/fournisseur', fournisseur.id, 'view']"
+                class="btn btn-info btn-sm"
+                data-cy="entityDetailsButton"
+              >
+                <fa-icon icon="eye"></fa-icon>
+                <span class="d-none d-md-inline" jhiTranslate="entity.action.view">View</span>
+              </button>
+
+              <button
+                type="submit"
+                [routerLink]="['/fournisseur', fournisseur.id, 'edit']"
+                class="btn btn-primary btn-sm"
+                data-cy="entityEditButton"
+              >
+                <fa-icon icon="pencil-alt"></fa-icon>
+                <span class="d-none d-md-inline" jhiTranslate="entity.action.edit">Edit</span>
+              </button>
+
+              <button type="submit" (click)="delete(fournisseur)" class="btn btn-danger btn-sm" data-cy="entityDeleteButton">
+                <fa-icon icon="times"></fa-icon>
+                <span class="d-none d-md-inline" jhiTranslate="entity.action.delete">Delete</span>
+              </button>
+            </div>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>

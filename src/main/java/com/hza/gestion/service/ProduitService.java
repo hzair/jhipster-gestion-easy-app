@@ -1,8 +1,9 @@
 package com.hza.gestion.service;
 
 import com.hza.gestion.domain.Produit;
-import java.util.List;
 import java.util.Optional;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 
 /**
  * Service Interface for managing {@link Produit}.
@@ -27,9 +28,10 @@ public interface ProduitService {
     /**
      * Get all the produits.
      *
+     * @param pageable the pagination information.
      * @return the list of entities.
      */
-    List<Produit> findAll();
+    Page<Produit> findAll(Pageable pageable);
 
     /**
      * Get the "id" produit.
@@ -37,12 +39,12 @@ public interface ProduitService {
      * @param id the id of the entity.
      * @return the entity.
      */
-    Optional<Produit> findOne(String id);
+    Optional<Produit> findOne(Long id);
 
     /**
      * Delete the "id" produit.
      *
      * @param id the id of the entity.
      */
-    void delete(String id);
+    void delete(Long id);
 }
