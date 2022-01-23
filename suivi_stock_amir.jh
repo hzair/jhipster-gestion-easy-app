@@ -1,0 +1,103 @@
+
+
+
+entity Produit {
+    idFonc String,
+    designation String required,
+    description String,
+    quantite Integer required,
+    prixAchat Long required,
+    prixVente Long required,
+    prixVenteGros Long,
+    image ImageBlob,
+    date Instant
+}
+
+entity Vendeur {
+    matricule String required,
+	nom String,
+	prenom String,
+	email String,
+    adresse String,
+	phoneNumber String,
+    salaire Long,
+	image ImageBlob
+}
+
+entity Fournisseur {
+    matricule String required,
+	nom String,
+	prenom String,
+	email String,
+    adresse String,
+	phoneNumber String,
+	image ImageBlob
+}
+
+entity Client {
+    matricule String,
+	nom String,
+	prenom String,
+	email String,
+    adresse String,
+	phoneNumber String,
+	image ImageBlob
+}
+
+entity Camion {
+    date Instant
+}
+
+entity Sortie {
+	quantite Integer,
+    date Instant
+}
+
+entity Credit {
+	montant Long,
+    designation String,
+    date Instant
+}
+
+
+relationship OneToOne {
+	Camion{vendeur} to Vendeur,
+    Credit{vendeur} to Vendeur,
+    Credit{client} to Client
+}
+
+relationship OneToMany {
+	Camion{produit} to Sortie,
+	Sortie to Produit{employee},
+}
+
+
+relationship ManyToOne {
+	Produit{fournisseur} to Fournisseur
+    
+}
+
+//relationship ManyToMany {
+//	Job{task(title)} to Task{job}
+//}
+
+// defining multiple oneToOne relationships
+relationship OneToOne {
+	JobHistory{job} to Job,
+	JobHistory{department} to Department,
+	JobHistory{employee2} to Employee
+}
+
+// Set pagination options
+paginate Vendeur, Client, Fournisseur, Produit with infinite-scroll
+//paginate Job with pagination 
+
+// Use Data Transfer Objects (DTO)
+// dto * with mapstruct
+
+// Set service options to all except few
+//service all with serviceImpl except Employee, Job
+service all with serviceImpl except Employee, Job
+
+// Set an angular suffix
+// angularSuffix * with mySuffix
