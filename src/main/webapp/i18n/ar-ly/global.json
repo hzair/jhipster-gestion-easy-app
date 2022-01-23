@@ -18,6 +18,12 @@
         "produit": "Produit",
         "imputation": "Imputation",
         "employee2": "Employee 2",
+        "vendeur": "Vendeur",
+        "fournisseur": "Fournisseur",
+        "client": "Client",
+        "camion": "Camion",
+        "sortie": "Sortie",
+        "credit": "Credit",
         "jhipster-needle-menu-add-entry": "JHipster will add additional entities here (do not translate!)"
       },
       "account": {

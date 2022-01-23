@@ -1,8 +1,10 @@
 package com.hza.gestion.domain;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import java.io.Serializable;
 import java.time.Instant;
 import javax.persistence.*;
+import javax.validation.constraints.*;
 
 /**
  * A Produit.
@@ -14,42 +16,64 @@ public class Produit implements Serializable {
     private static final long serialVersionUID = 1L;
 
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
-    private String id;
+    private Long id;
 
     @Column(name = "id_fonc")
     private String idFonc;
 
-    @Column(name = "id_fournisseur")
-    private String idFournisseur;
-
-    @Column(name = "nom")
-    private String nom;
+    @NotNull
+    @Column(name = "designation", nullable = false)
+    private String designation;
 
     @Column(name = "description")
     private String description;
 
-    @Column(name = "quantite")
+    @NotNull
+    @Column(name = "quantite", nullable = false)
     private Integer quantite;
 
-    @Column(name = "image")
-    private String image;
+    @NotNull
+    @Column(name = "prix_achat", nullable = false)
+    private Long prixAchat;
 
-    @Column(name = "date_expiration")
-    private Instant dateExpiration;
+    @NotNull
+    @Column(name = "prix_vente", nullable = false)
+    private Long prixVente;
+
+    @Column(name = "prix_vente_gros")
+    private Long prixVenteGros;
+
+    @Lob
+    @Column(name = "image")
+    private byte[] image;
+
+    @Column(name = "image_content_type")
+    private String imageContentType;
+
+    @Column(name = "date")
+    private Instant date;
+
+    @ManyToOne
+    private Fournisseur fournisseur;
+
+    @ManyToOne
+    @JsonIgnoreProperties(value = { "produits", "camion" }, allowSetters = true)
+    private Sortie sortie;
 
     // jhipster-needle-entity-add-field - JHipster will add fields here
 
-    public String getId() {
+    public Long getId() {
         return this.id;
     }
 
-    public Produit id(String id) {
+    public Produit id(Long id) {
         this.setId(id);
         return this;
     }
 
-    public void setId(String id) {
+    public void setId(Long id) {
         this.id = id;
     }
 
@@ -66,30 +90,17 @@ public class Produit implements Serializable {
         this.idFonc = idFonc;
     }
 
-    public String getIdFournisseur() {
-        return this.idFournisseur;
+    public String getDesignation() {
+        return this.designation;
     }
 
-    public Produit idFournisseur(String idFournisseur) {
-        this.setIdFournisseur(idFournisseur);
+    public Produit designation(String designation) {
+        this.setDesignation(designation);
         return this;
     }
 
-    public void setIdFournisseur(String idFournisseur) {
-        this.idFournisseur = idFournisseur;
-    }
-
-    public String getNom() {
-        return this.nom;
-    }
-
-    public Produit nom(String nom) {
-        this.setNom(nom);
-        return this;
-    }
-
-    public void setNom(String nom) {
-        this.nom = nom;
+    public void setDesignation(String designation) {
+        this.designation = designation;
     }
 
     public String getDescription() {
@@ -118,30 +129,108 @@ public class Produit implements Serializable {
         this.quantite = quantite;
     }
 
-    public String getImage() {
+    public Long getPrixAchat() {
+        return this.prixAchat;
+    }
+
+    public Produit prixAchat(Long prixAchat) {
+        this.setPrixAchat(prixAchat);
+        return this;
+    }
+
+    public void setPrixAchat(Long prixAchat) {
+        this.prixAchat = prixAchat;
+    }
+
+    public Long getPrixVente() {
+        return this.prixVente;
+    }
+
+    public Produit prixVente(Long prixVente) {
+        this.setPrixVente(prixVente);
+        return this;
+    }
+
+    public void setPrixVente(Long prixVente) {
+        this.prixVente = prixVente;
+    }
+
+    public Long getPrixVenteGros() {
+        return this.prixVenteGros;
+    }
+
+    public Produit prixVenteGros(Long prixVenteGros) {
+        this.setPrixVenteGros(prixVenteGros);
+        return this;
+    }
+
+    public void setPrixVenteGros(Long prixVenteGros) {
+        this.prixVenteGros = prixVenteGros;
+    }
+
+    public byte[] getImage() {
         return this.image;
     }
 
-    public Produit image(String image) {
+    public Produit image(byte[] image) {
         this.setImage(image);
         return this;
     }
 
-    public void setImage(String image) {
+    public void setImage(byte[] image) {
         this.image = image;
     }
 
-    public Instant getDateExpiration() {
-        return this.dateExpiration;
+    public String getImageContentType() {
+        return this.imageContentType;
     }
 
-    public Produit dateExpiration(Instant dateExpiration) {
-        this.setDateExpiration(dateExpiration);
+    public Produit imageContentType(String imageContentType) {
+        this.imageContentType = imageContentType;
         return this;
     }
 
-    public void setDateExpiration(Instant dateExpiration) {
-        this.dateExpiration = dateExpiration;
+    public void setImageContentType(String imageContentType) {
+        this.imageContentType = imageContentType;
+    }
+
+    public Instant getDate() {
+        return this.date;
+    }
+
+    public Produit date(Instant date) {
+        this.setDate(date);
+        return this;
+    }
+
+    public void setDate(Instant date) {
+        this.date = date;
+    }
+
+    public Fournisseur getFournisseur() {
+        return this.fournisseur;
+    }
+
+    public void setFournisseur(Fournisseur fournisseur) {
+        this.fournisseur = fournisseur;
+    }
+
+    public Produit fournisseur(Fournisseur fournisseur) {
+        this.setFournisseur(fournisseur);
+        return this;
+    }
+
+    public Sortie getSortie() {
+        return this.sortie;
+    }
+
+    public void setSortie(Sortie sortie) {
+        this.sortie = sortie;
+    }
+
+    public Produit sortie(Sortie sortie) {
+        this.setSortie(sortie);
+        return this;
     }
 
     // jhipster-needle-entity-add-getters-setters - JHipster will add getters and setters here
@@ -169,12 +258,15 @@ public class Produit implements Serializable {
         return "Produit{" +
             "id=" + getId() +
             ", idFonc='" + getIdFonc() + "'" +
-            ", idFournisseur='" + getIdFournisseur() + "'" +
-            ", nom='" + getNom() + "'" +
+            ", designation='" + getDesignation() + "'" +
             ", description='" + getDescription() + "'" +
             ", quantite=" + getQuantite() +
+            ", prixAchat=" + getPrixAchat() +
+            ", prixVente=" + getPrixVente() +
+            ", prixVenteGros=" + getPrixVenteGros() +
             ", image='" + getImage() + "'" +
-            ", dateExpiration='" + getDateExpiration() + "'" +
+            ", imageContentType='" + getImageContentType() + "'" +
+            ", date='" + getDate() + "'" +
             "}";
     }
 }

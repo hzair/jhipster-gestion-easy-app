@@ -10,7 +10,7 @@
       <jhi-alert></jhi-alert>
 
       <dl class="row-md jh-entity-details">
-        <dt><span jhiTranslate="gestionEasyApp.produit.id">Id</span></dt>
+        <dt><span jhiTranslate="global.field.id">ID</span></dt>
         <dd>
           <span>{{ produit.id }}</span>
         </dd>
@@ -18,13 +18,9 @@
         <dd>
           <span>{{ produit.idFonc }}</span>
         </dd>
-        <dt><span jhiTranslate="gestionEasyApp.produit.idFournisseur">Id Fournisseur</span></dt>
+        <dt><span jhiTranslate="gestionEasyApp.produit.designation">Designation</span></dt>
         <dd>
-          <span>{{ produit.idFournisseur }}</span>
-        </dd>
-        <dt><span jhiTranslate="gestionEasyApp.produit.nom">Nom</span></dt>
-        <dd>
-          <span>{{ produit.nom }}</span>
+          <span>{{ produit.designation }}</span>
         </dd>
         <dt><span jhiTranslate="gestionEasyApp.produit.description">Description</span></dt>
         <dd>
@@ -34,13 +30,42 @@
         <dd>
           <span>{{ produit.quantite }}</span>
         </dd>
+        <dt><span jhiTranslate="gestionEasyApp.produit.prixAchat">Prix Achat</span></dt>
+        <dd>
+          <span>{{ produit.prixAchat }}</span>
+        </dd>
+        <dt><span jhiTranslate="gestionEasyApp.produit.prixVente">Prix Vente</span></dt>
+        <dd>
+          <span>{{ produit.prixVente }}</span>
+        </dd>
+        <dt><span jhiTranslate="gestionEasyApp.produit.prixVenteGros">Prix Vente Gros</span></dt>
+        <dd>
+          <span>{{ produit.prixVenteGros }}</span>
+        </dd>
         <dt><span jhiTranslate="gestionEasyApp.produit.image">Image</span></dt>
         <dd>
-          <span>{{ produit.image }}</span>
+          <div *ngIf="produit.image">
+            <a (click)="openFile(produit.image, produit.imageContentType)">
+              <img [src]="'data:' + produit.imageContentType + ';base64,' + produit.image" style="max-width: 100%" alt="produit image" />
+            </a>
+            {{ produit.imageContentType }}, {{ byteSize(produit.image) }}
+          </div>
         </dd>
-        <dt><span jhiTranslate="gestionEasyApp.produit.dateExpiration">Date Expiration</span></dt>
+        <dt><span jhiTranslate="gestionEasyApp.produit.date">Date</span></dt>
         <dd>
-          <span>{{ produit.dateExpiration | formatMediumDatetime }}</span>
+          <span>{{ produit.date | formatMediumDatetime }}</span>
+        </dd>
+        <dt><span jhiTranslate="gestionEasyApp.produit.fournisseur">Fournisseur</span></dt>
+        <dd>
+          <div *ngIf="produit.fournisseur">
+            <a [routerLink]="['/fournisseur', produit.fournisseur?.id, 'view']">{{ produit.fournisseur?.id }}</a>
+          </div>
+        </dd>
+        <dt><span jhiTranslate="gestionEasyApp.produit.sortie">Sortie</span></dt>
+        <dd>
+          <div *ngIf="produit.sortie">
+            <a [routerLink]="['/sortie', produit.sortie?.id, 'view']">{{ produit.sortie?.id }}</a>
+          </div>
         </dd>
       </dl>
 

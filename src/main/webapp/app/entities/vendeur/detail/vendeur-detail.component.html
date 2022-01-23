@@ -1,0 +1,65 @@
+<div class="row justify-content-center">
+  <div class="col-8">
+    <div *ngIf="vendeur">
+      <h2 data-cy="vendeurDetailsHeading"><span jhiTranslate="gestionEasyApp.vendeur.detail.title">Vendeur</span></h2>
+
+      <hr />
+
+      <jhi-alert-error></jhi-alert-error>
+
+      <jhi-alert></jhi-alert>
+
+      <dl class="row-md jh-entity-details">
+        <dt><span jhiTranslate="global.field.id">ID</span></dt>
+        <dd>
+          <span>{{ vendeur.id }}</span>
+        </dd>
+        <dt><span jhiTranslate="gestionEasyApp.vendeur.matricule">Matricule</span></dt>
+        <dd>
+          <span>{{ vendeur.matricule }}</span>
+        </dd>
+        <dt><span jhiTranslate="gestionEasyApp.vendeur.nom">Nom</span></dt>
+        <dd>
+          <span>{{ vendeur.nom }}</span>
+        </dd>
+        <dt><span jhiTranslate="gestionEasyApp.vendeur.prenom">Prenom</span></dt>
+        <dd>
+          <span>{{ vendeur.prenom }}</span>
+        </dd>
+        <dt><span jhiTranslate="gestionEasyApp.vendeur.email">Email</span></dt>
+        <dd>
+          <span>{{ vendeur.email }}</span>
+        </dd>
+        <dt><span jhiTranslate="gestionEasyApp.vendeur.adresse">Adresse</span></dt>
+        <dd>
+          <span>{{ vendeur.adresse }}</span>
+        </dd>
+        <dt><span jhiTranslate="gestionEasyApp.vendeur.phoneNumber">Phone Number</span></dt>
+        <dd>
+          <span>{{ vendeur.phoneNumber }}</span>
+        </dd>
+        <dt><span jhiTranslate="gestionEasyApp.vendeur.salaire">Salaire</span></dt>
+        <dd>
+          <span>{{ vendeur.salaire }}</span>
+        </dd>
+        <dt><span jhiTranslate="gestionEasyApp.vendeur.image">Image</span></dt>
+        <dd>
+          <div *ngIf="vendeur.image">
+            <a (click)="openFile(vendeur.image, vendeur.imageContentType)">
+              <img [src]="'data:' + vendeur.imageContentType + ';base64,' + vendeur.image" style="max-width: 100%" alt="vendeur image" />
+            </a>
+            {{ vendeur.imageContentType }}, {{ byteSize(vendeur.image) }}
+          </div>
+        </dd>
+      </dl>
+
+      <button type="submit" (click)="previousState()" class="btn btn-info" data-cy="entityDetailsBackButton">
+        <fa-icon icon="arrow-left"></fa-icon>&nbsp;<span jhiTranslate="entity.action.back">Back</span>
+      </button>
+
+      <button type="button" [routerLink]="['/vendeur', vendeur.id, 'edit']" class="btn btn-primary">
+        <fa-icon icon="pencil-alt"></fa-icon>&nbsp;<span jhiTranslate="entity.action.edit">Edit</span>
+      </button>
+    </div>
+  </div>
+</div>

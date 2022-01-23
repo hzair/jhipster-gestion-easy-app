@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<databaseChangeLog
+    xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.6.xsd">
+    <!--
+        Added the constraints for entity Sortie.
+    -->
+    <changeSet id="20220123121418-2" author="jhipster">
+
+        <addForeignKeyConstraint baseColumnNames="camion_id"
+                                 baseTableName="sortie"
+                                 constraintName="fk_sortie__camion_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="camion"/>
+    </changeSet>
+</databaseChangeLog>

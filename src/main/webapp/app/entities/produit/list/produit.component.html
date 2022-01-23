@@ -3,7 +3,7 @@
     <span jhiTranslate="gestionEasyApp.produit.home.title">Produits</span>
 
     <div class="d-flex justify-content-end">
-      <button class="btn btn-info mr-2" (click)="loadAll()" [disabled]="isLoading">
+      <button class="btn btn-info mr-2" (click)="reset()" [disabled]="isLoading">
         <fa-icon icon="sync" [spin]="isLoading"></fa-icon>
         <span jhiTranslate="gestionEasyApp.produit.home.refreshListLabel">Refresh List</span>
       </button>
@@ -31,30 +31,71 @@
   <div class="table-responsive" id="entities" *ngIf="produits && produits.length > 0">
     <table class="table table-striped" aria-describedby="page-heading">
       <thead>
-        <tr>
-          <th scope="col"><span jhiTranslate="gestionEasyApp.produit.id">Id</span></th>
-          <th scope="col"><span jhiTranslate="gestionEasyApp.produit.idFonc">Id Fonc</span></th>
-          <th scope="col"><span jhiTranslate="gestionEasyApp.produit.idFournisseur">Id Fournisseur</span></th>
-          <th scope="col"><span jhiTranslate="gestionEasyApp.produit.nom">Nom</span></th>
-          <th scope="col"><span jhiTranslate="gestionEasyApp.produit.description">Description</span></th>
-          <th scope="col"><span jhiTranslate="gestionEasyApp.produit.quantite">Quantite</span></th>
-          <th scope="col"><span jhiTranslate="gestionEasyApp.produit.image">Image</span></th>
-          <th scope="col"><span jhiTranslate="gestionEasyApp.produit.dateExpiration">Date Expiration</span></th>
+        <tr jhiSort [(predicate)]="predicate" [(ascending)]="ascending" (sortChange)="reset()">
+          <th scope="col" jhiSortBy="id"><span jhiTranslate="global.field.id">ID</span> <fa-icon icon="sort"></fa-icon></th>
+          <th scope="col" jhiSortBy="idFonc">
+            <span jhiTranslate="gestionEasyApp.produit.idFonc">Id Fonc</span> <fa-icon icon="sort"></fa-icon>
+          </th>
+          <th scope="col" jhiSortBy="designation">
+            <span jhiTranslate="gestionEasyApp.produit.designation">Designation</span> <fa-icon icon="sort"></fa-icon>
+          </th>
+          <th scope="col" jhiSortBy="description">
+            <span jhiTranslate="gestionEasyApp.produit.description">Description</span> <fa-icon icon="sort"></fa-icon>
+          </th>
+          <th scope="col" jhiSortBy="quantite">
+            <span jhiTranslate="gestionEasyApp.produit.quantite">Quantite</span> <fa-icon icon="sort"></fa-icon>
+          </th>
+          <th scope="col" jhiSortBy="prixAchat">
+            <span jhiTranslate="gestionEasyApp.produit.prixAchat">Prix Achat</span> <fa-icon icon="sort"></fa-icon>
+          </th>
+          <th scope="col" jhiSortBy="prixVente">
+            <span jhiTranslate="gestionEasyApp.produit.prixVente">Prix Vente</span> <fa-icon icon="sort"></fa-icon>
+          </th>
+          <th scope="col" jhiSortBy="prixVenteGros">
+            <span jhiTranslate="gestionEasyApp.produit.prixVenteGros">Prix Vente Gros</span> <fa-icon icon="sort"></fa-icon>
+          </th>
+          <th scope="col" jhiSortBy="image">
+            <span jhiTranslate="gestionEasyApp.produit.image">Image</span> <fa-icon icon="sort"></fa-icon>
+          </th>
+          <th scope="col" jhiSortBy="date"><span jhiTranslate="gestionEasyApp.produit.date">Date</span> <fa-icon icon="sort"></fa-icon></th>
+          <th scope="col" jhiSortBy="fournisseur.id">
+            <span jhiTranslate="gestionEasyApp.produit.fournisseur">Fournisseur</span> <fa-icon icon="sort"></fa-icon>
+          </th>
+          <th scope="col" jhiSortBy="sortie.id">
+            <span jhiTranslate="gestionEasyApp.produit.sortie">Sortie</span> <fa-icon icon="sort"></fa-icon>
+          </th>
           <th scope="col"></th>
         </tr>
       </thead>
-      <tbody>
+      <tbody infinite-scroll (scrolled)="loadPage(page + 1)" [infiniteScrollDisabled]="page >= links['last']" [infiniteScrollDistance]="0">
         <tr *ngFor="let produit of produits; trackBy: trackId" data-cy="entityTable">
           <td>
             <a [routerLink]="['/produit', produit.id, 'view']">{{ produit.id }}</a>
           </td>
           <td>{{ produit.idFonc }}</td>
-          <td>{{ produit.idFournisseur }}</td>
-          <td>{{ produit.nom }}</td>
+          <td>{{ produit.designation }}</td>
           <td>{{ produit.description }}</td>
           <td>{{ produit.quantite }}</td>
-          <td>{{ produit.image }}</td>
-          <td>{{ produit.dateExpiration | formatMediumDatetime }}</td>
+          <td>{{ produit.prixAchat }}</td>
+          <td>{{ produit.prixVente }}</td>
+          <td>{{ produit.prixVenteGros }}</td>
+          <td>
+            <a *ngIf="produit.image" (click)="openFile(produit.image, produit.imageContentType)">
+              <img [src]="'data:' + produit.imageContentType + ';base64,' + produit.image" style="max-height: 30px" alt="produit image" />
+            </a>
+            <span *ngIf="produit.image">{{ produit.imageContentType }}, {{ byteSize(produit.image) }}</span>
+          </td>
+          <td>{{ produit.date | formatMediumDatetime }}</td>
+          <td>
+            <div *ngIf="produit.fournisseur">
+              <a [routerLink]="['/fournisseur', produit.fournisseur?.id, 'view']">{{ produit.fournisseur?.id }}</a>
+            </div>
+          </td>
+          <td>
+            <div *ngIf="produit.sortie">
+              <a [routerLink]="['/sortie', produit.sortie?.id, 'view']">{{ produit.sortie?.id }}</a>
+            </div>
+          </td>
           <td class="text-right">
             <div class="btn-group">
               <button

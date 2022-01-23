@@ -11,33 +11,48 @@
     -->
     <changeSet id="20220122145812-1" author="jhipster">
         <createTable tableName="produit">
-            <column name="id" type="varchar(255)">
+            <column name="id" type="bigint" autoIncrement="true">
                 <constraints primaryKey="true" nullable="false"/>
             </column>
             <column name="id_fonc" type="varchar(255)">
                 <constraints nullable="true" />
             </column>
-            <column name="id_fournisseur" type="varchar(255)">
-                <constraints nullable="true" />
-            </column>
-            <column name="nom" type="varchar(255)">
-                <constraints nullable="true" />
+            <column name="designation" type="varchar(255)">
+                <constraints nullable="false" />
             </column>
             <column name="description" type="varchar(255)">
                 <constraints nullable="true" />
             </column>
             <column name="quantite" type="integer">
+                <constraints nullable="false" />
+            </column>
+            <column name="prix_achat" type="bigint">
+                <constraints nullable="false" />
+            </column>
+            <column name="prix_vente" type="bigint">
+                <constraints nullable="false" />
+            </column>
+            <column name="prix_vente_gros" type="bigint">
                 <constraints nullable="true" />
             </column>
-            <column name="image" type="varchar(255)">
+            <column name="image" type="longblob">
                 <constraints nullable="true" />
             </column>
-            <column name="date_expiration" type="${datetimeType}">
+            <column name="image_content_type" type="varchar(255)">
+                <constraints nullable="true" />
+            </column>
+            <column name="date" type="${datetimeType}">
+                <constraints nullable="true" />
+            </column>
+            <column name="fournisseur_id" type="bigint">
+                <constraints nullable="true" />
+            </column>
+            <column name="sortie_id" type="bigint">
                 <constraints nullable="true" />
             </column>
             <!-- jhipster-needle-liquibase-add-column - JHipster will add columns here -->
         </createTable>
-        <dropDefaultValue tableName="produit" columnName="date_expiration" columnDataType="${datetimeType}"/>
+        <dropDefaultValue tableName="produit" columnName="date" columnDataType="${datetimeType}"/>
     </changeSet>
 
     <!-- jhipster-needle-liquibase-add-changeset - JHipster will add changesets here -->
@@ -56,14 +71,17 @@
                   separator=";"
                   tableName="produit"
                   usePreparedStatements="true">
-            <column name="id" type="string"/>
+            <column name="id" type="numeric"/>
             <column name="id_fonc" type="string"/>
-            <column name="id_fournisseur" type="string"/>
-            <column name="nom" type="string"/>
+            <column name="designation" type="string"/>
             <column name="description" type="string"/>
             <column name="quantite" type="numeric"/>
-            <column name="image" type="string"/>
-            <column name="date_expiration" type="date"/>
+            <column name="prix_achat" type="numeric"/>
+            <column name="prix_vente" type="numeric"/>
+            <column name="prix_vente_gros" type="numeric"/>
+            <column name="image" type="blob"/>
+            <column name="image_content_type" type="string"/>
+            <column name="date" type="date"/>
             <!-- jhipster-needle-liquibase-add-loadcolumn - JHipster (and/or extensions) can add load columns here -->
         </loadData>
     </changeSet>

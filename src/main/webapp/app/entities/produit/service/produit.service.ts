@@ -28,18 +28,18 @@ export class ProduitService {
   update(produit: IProduit): Observable<EntityResponseType> {
     const copy = this.convertDateFromClient(produit);
     return this.http
-      .put<IProduit>(`${this.resourceUrl}/${getProduitIdentifier(produit) as string}`, copy, { observe: 'response' })
+      .put<IProduit>(`${this.resourceUrl}/${getProduitIdentifier(produit) as number}`, copy, { observe: 'response' })
       .pipe(map((res: EntityResponseType) => this.convertDateFromServer(res)));
   }
 
   partialUpdate(produit: IProduit): Observable<EntityResponseType> {
     const copy = this.convertDateFromClient(produit);
     return this.http
-      .patch<IProduit>(`${this.resourceUrl}/${getProduitIdentifier(produit) as string}`, copy, { observe: 'response' })
+      .patch<IProduit>(`${this.resourceUrl}/${getProduitIdentifier(produit) as number}`, copy, { observe: 'response' })
       .pipe(map((res: EntityResponseType) => this.convertDateFromServer(res)));
   }
 
-  find(id: string): Observable<EntityResponseType> {
+  find(id: number): Observable<EntityResponseType> {
     return this.http
       .get<IProduit>(`${this.resourceUrl}/${id}`, { observe: 'response' })
       .pipe(map((res: EntityResponseType) => this.convertDateFromServer(res)));
@@ -52,7 +52,7 @@ export class ProduitService {
       .pipe(map((res: EntityArrayResponseType) => this.convertDateArrayFromServer(res)));
   }
 
-  delete(id: string): Observable<HttpResponse<{}>> {
+  delete(id: number): Observable<HttpResponse<{}>> {
     return this.http.delete(`${this.resourceUrl}/${id}`, { observe: 'response' });
   }
 
@@ -75,13 +75,13 @@ export class ProduitService {
 
   protected convertDateFromClient(produit: IProduit): IProduit {
     return Object.assign({}, produit, {
-      dateExpiration: produit.dateExpiration?.isValid() ? produit.dateExpiration.toJSON() : undefined,
+      date: produit.date?.isValid() ? produit.date.toJSON() : undefined,
     });
   }
 
   protected convertDateFromServer(res: EntityResponseType): EntityResponseType {
     if (res.body) {
-      res.body.dateExpiration = res.body.dateExpiration ? dayjs(res.body.dateExpiration) : undefined;
+      res.body.date = res.body.date ? dayjs(res.body.date) : undefined;
     }
     return res;
   }
@@ -89,7 +89,7 @@ export class ProduitService {
   protected convertDateArrayFromServer(res: EntityArrayResponseType): EntityArrayResponseType {
     if (res.body) {
       res.body.forEach((produit: IProduit) => {
-        produit.dateExpiration = produit.dateExpiration ? dayjs(produit.dateExpiration) : undefined;
+        produit.date = produit.date ? dayjs(produit.date) : undefined;
       });
     }
     return res;

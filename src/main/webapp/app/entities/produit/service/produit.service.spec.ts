@@ -24,14 +24,17 @@ describe('Produit Service', () => {
     currentDate = dayjs();
 
     elemDefault = {
-      id: 'AAAAAAA',
+      id: 0,
       idFonc: 'AAAAAAA',
-      idFournisseur: 'AAAAAAA',
-      nom: 'AAAAAAA',
+      designation: 'AAAAAAA',
       description: 'AAAAAAA',
       quantite: 0,
+      prixAchat: 0,
+      prixVente: 0,
+      prixVenteGros: 0,
+      imageContentType: 'image/png',
       image: 'AAAAAAA',
-      dateExpiration: currentDate,
+      date: currentDate,
     };
   });
 
@@ -39,12 +42,12 @@ describe('Produit Service', () => {
     it('should find an element', () => {
       const returnedFromService = Object.assign(
         {
-          dateExpiration: currentDate.format(DATE_TIME_FORMAT),
+          date: currentDate.format(DATE_TIME_FORMAT),
         },
         elemDefault
       );
 
-      service.find('ABC').subscribe(resp => (expectedResult = resp.body));
+      service.find(123).subscribe(resp => (expectedResult = resp.body));
 
       const req = httpMock.expectOne({ method: 'GET' });
       req.flush(returnedFromService);
@@ -54,15 +57,15 @@ describe('Produit Service', () => {
     it('should create a Produit', () => {
       const returnedFromService = Object.assign(
         {
-          id: 'ID',
-          dateExpiration: currentDate.format(DATE_TIME_FORMAT),
+          id: 0,
+          date: currentDate.format(DATE_TIME_FORMAT),
         },
         elemDefault
       );
 
       const expected = Object.assign(
         {
-          dateExpiration: currentDate,
+          date: currentDate,
         },
         returnedFromService
       );
@@ -77,21 +80,23 @@ describe('Produit Service', () => {
     it('should update a Produit', () => {
       const returnedFromService = Object.assign(
         {
-          id: 'BBBBBB',
+          id: 1,
           idFonc: 'BBBBBB',
-          idFournisseur: 'BBBBBB',
-          nom: 'BBBBBB',
+          designation: 'BBBBBB',
           description: 'BBBBBB',
           quantite: 1,
+          prixAchat: 1,
+          prixVente: 1,
+          prixVenteGros: 1,
           image: 'BBBBBB',
-          dateExpiration: currentDate.format(DATE_TIME_FORMAT),
+          date: currentDate.format(DATE_TIME_FORMAT),
         },
         elemDefault
       );
 
       const expected = Object.assign(
         {
-          dateExpiration: currentDate,
+          date: currentDate,
         },
         returnedFromService
       );
@@ -107,10 +112,10 @@ describe('Produit Service', () => {
       const patchObject = Object.assign(
         {
           idFonc: 'BBBBBB',
-          idFournisseur: 'BBBBBB',
-          quantite: 1,
-          image: 'BBBBBB',
-          dateExpiration: currentDate.format(DATE_TIME_FORMAT),
+          designation: 'BBBBBB',
+          prixAchat: 1,
+          prixVente: 1,
+          prixVenteGros: 1,
         },
         new Produit()
       );
@@ -119,7 +124,7 @@ describe('Produit Service', () => {
 
       const expected = Object.assign(
         {
-          dateExpiration: currentDate,
+          date: currentDate,
         },
         returnedFromService
       );
@@ -134,21 +139,23 @@ describe('Produit Service', () => {
     it('should return a list of Produit', () => {
       const returnedFromService = Object.assign(
         {
-          id: 'BBBBBB',
+          id: 1,
           idFonc: 'BBBBBB',
-          idFournisseur: 'BBBBBB',
-          nom: 'BBBBBB',
+          designation: 'BBBBBB',
           description: 'BBBBBB',
           quantite: 1,
+          prixAchat: 1,
+          prixVente: 1,
+          prixVenteGros: 1,
           image: 'BBBBBB',
-          dateExpiration: currentDate.format(DATE_TIME_FORMAT),
+          date: currentDate.format(DATE_TIME_FORMAT),
         },
         elemDefault
       );
 
       const expected = Object.assign(
         {
-          dateExpiration: currentDate,
+          date: currentDate,
         },
         returnedFromService
       );
@@ -162,7 +169,7 @@ describe('Produit Service', () => {
     });
 
     it('should delete a Produit', () => {
-      service.delete('ABC').subscribe(resp => (expectedResult = resp.ok));
+      service.delete(123).subscribe(resp => (expectedResult = resp.ok));
 
       const req = httpMock.expectOne({ method: 'DELETE' });
       req.flush({ status: 200 });
@@ -171,42 +178,42 @@ describe('Produit Service', () => {
 
     describe('addProduitToCollectionIfMissing', () => {
       it('should add a Produit to an empty array', () => {
-        const produit: IProduit = { id: 'ABC' };
+        const produit: IProduit = { id: 123 };
         expectedResult = service.addProduitToCollectionIfMissing([], produit);
         expect(expectedResult).toHaveLength(1);
         expect(expectedResult).toContain(produit);
       });
 
       it('should not add a Produit to an array that contains it', () => {
-        const produit: IProduit = { id: 'ABC' };
+        const produit: IProduit = { id: 123 };
         const produitCollection: IProduit[] = [
           {
             ...produit,
           },
-          { id: 'CBA' },
+          { id: 456 },
         ];
         expectedResult = service.addProduitToCollectionIfMissing(produitCollection, produit);
         expect(expectedResult).toHaveLength(2);
       });
 
       it("should add a Produit to an array that doesn't contain it", () => {
-        const produit: IProduit = { id: 'ABC' };
-        const produitCollection: IProduit[] = [{ id: 'CBA' }];
+        const produit: IProduit = { id: 123 };
+        const produitCollection: IProduit[] = [{ id: 456 }];
         expectedResult = service.addProduitToCollectionIfMissing(produitCollection, produit);
         expect(expectedResult).toHaveLength(2);
         expect(expectedResult).toContain(produit);
       });
 
       it('should add only unique Produit to an array', () => {
-        const produitArray: IProduit[] = [{ id: 'ABC' }, { id: 'CBA' }, { id: '043218e0-cdc1-4264-bbb1-6bead479f3b9' }];
-        const produitCollection: IProduit[] = [{ id: 'ABC' }];
+        const produitArray: IProduit[] = [{ id: 123 }, { id: 456 }, { id: 23096 }];
+        const produitCollection: IProduit[] = [{ id: 123 }];
         expectedResult = service.addProduitToCollectionIfMissing(produitCollection, ...produitArray);
         expect(expectedResult).toHaveLength(3);
       });
 
       it('should accept varargs', () => {
-        const produit: IProduit = { id: 'ABC' };
-        const produit2: IProduit = { id: 'CBA' };
+        const produit: IProduit = { id: 123 };
+        const produit2: IProduit = { id: 456 };
         expectedResult = service.addProduitToCollectionIfMissing([], produit, produit2);
         expect(expectedResult).toHaveLength(2);
         expect(expectedResult).toContain(produit);
@@ -214,14 +221,14 @@ describe('Produit Service', () => {
       });
 
       it('should accept null and undefined values', () => {
-        const produit: IProduit = { id: 'ABC' };
+        const produit: IProduit = { id: 123 };
         expectedResult = service.addProduitToCollectionIfMissing([], null, produit, undefined);
         expect(expectedResult).toHaveLength(1);
         expect(expectedResult).toContain(produit);
       });
 
       it('should return initial array if no Produit is added', () => {
-        const produitCollection: IProduit[] = [{ id: 'ABC' }];
+        const produitCollection: IProduit[] = [{ id: 123 }];
         expectedResult = service.addProduitToCollectionIfMissing(produitCollection, undefined, null);
         expect(expectedResult).toEqual(produitCollection);
       });

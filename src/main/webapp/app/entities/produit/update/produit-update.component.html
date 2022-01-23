@@ -8,17 +8,9 @@
       <div>
         <jhi-alert-error></jhi-alert-error>
 
-        <div class="form-group">
-          <label class="form-control-label" jhiTranslate="gestionEasyApp.produit.id" for="field_id">Id</label>
-          <input
-            type="text"
-            class="form-control"
-            name="id"
-            id="field_id"
-            data-cy="id"
-            formControlName="id"
-            [readonly]="editForm.get('id')!.value != null"
-          />
+        <div class="form-group" [hidden]="editForm.get('id')!.value == null">
+          <label class="form-control-label" jhiTranslate="global.field.id" for="field_id">ID</label>
+          <input type="number" class="form-control" name="id" id="field_id" data-cy="id" formControlName="id" [readonly]="true" />
         </div>
 
         <div class="form-group">
@@ -27,22 +19,24 @@
         </div>
 
         <div class="form-group">
-          <label class="form-control-label" jhiTranslate="gestionEasyApp.produit.idFournisseur" for="field_idFournisseur"
-            >Id Fournisseur</label
-          >
+          <label class="form-control-label" jhiTranslate="gestionEasyApp.produit.designation" for="field_designation">Designation</label>
           <input
             type="text"
             class="form-control"
-            name="idFournisseur"
-            id="field_idFournisseur"
-            data-cy="idFournisseur"
-            formControlName="idFournisseur"
+            name="designation"
+            id="field_designation"
+            data-cy="designation"
+            formControlName="designation"
           />
-        </div>
-
-        <div class="form-group">
-          <label class="form-control-label" jhiTranslate="gestionEasyApp.produit.nom" for="field_nom">Nom</label>
-          <input type="text" class="form-control" name="nom" id="field_nom" data-cy="nom" formControlName="nom" />
+          <div *ngIf="editForm.get('designation')!.invalid && (editForm.get('designation')!.dirty || editForm.get('designation')!.touched)">
+            <small
+              class="form-text text-danger"
+              *ngIf="editForm.get('designation')?.errors?.required"
+              jhiTranslate="entity.validation.required"
+            >
+              This field is required.
+            </small>
+          </div>
         </div>
 
         <div class="form-group">
@@ -60,28 +54,159 @@
         <div class="form-group">
           <label class="form-control-label" jhiTranslate="gestionEasyApp.produit.quantite" for="field_quantite">Quantite</label>
           <input type="number" class="form-control" name="quantite" id="field_quantite" data-cy="quantite" formControlName="quantite" />
+          <div *ngIf="editForm.get('quantite')!.invalid && (editForm.get('quantite')!.dirty || editForm.get('quantite')!.touched)">
+            <small
+              class="form-text text-danger"
+              *ngIf="editForm.get('quantite')?.errors?.required"
+              jhiTranslate="entity.validation.required"
+            >
+              This field is required.
+            </small>
+            <small
+              class="form-text text-danger"
+              [hidden]="!editForm.get('quantite')?.errors?.number"
+              jhiTranslate="entity.validation.number"
+            >
+              This field should be a number.
+            </small>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label class="form-control-label" jhiTranslate="gestionEasyApp.produit.prixAchat" for="field_prixAchat">Prix Achat</label>
+          <input type="number" class="form-control" name="prixAchat" id="field_prixAchat" data-cy="prixAchat" formControlName="prixAchat" />
+          <div *ngIf="editForm.get('prixAchat')!.invalid && (editForm.get('prixAchat')!.dirty || editForm.get('prixAchat')!.touched)">
+            <small
+              class="form-text text-danger"
+              *ngIf="editForm.get('prixAchat')?.errors?.required"
+              jhiTranslate="entity.validation.required"
+            >
+              This field is required.
+            </small>
+            <small
+              class="form-text text-danger"
+              [hidden]="!editForm.get('prixAchat')?.errors?.number"
+              jhiTranslate="entity.validation.number"
+            >
+              This field should be a number.
+            </small>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label class="form-control-label" jhiTranslate="gestionEasyApp.produit.prixVente" for="field_prixVente">Prix Vente</label>
+          <input type="number" class="form-control" name="prixVente" id="field_prixVente" data-cy="prixVente" formControlName="prixVente" />
+          <div *ngIf="editForm.get('prixVente')!.invalid && (editForm.get('prixVente')!.dirty || editForm.get('prixVente')!.touched)">
+            <small
+              class="form-text text-danger"
+              *ngIf="editForm.get('prixVente')?.errors?.required"
+              jhiTranslate="entity.validation.required"
+            >
+              This field is required.
+            </small>
+            <small
+              class="form-text text-danger"
+              [hidden]="!editForm.get('prixVente')?.errors?.number"
+              jhiTranslate="entity.validation.number"
+            >
+              This field should be a number.
+            </small>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label class="form-control-label" jhiTranslate="gestionEasyApp.produit.prixVenteGros" for="field_prixVenteGros"
+            >Prix Vente Gros</label
+          >
+          <input
+            type="number"
+            class="form-control"
+            name="prixVenteGros"
+            id="field_prixVenteGros"
+            data-cy="prixVenteGros"
+            formControlName="prixVenteGros"
+          />
         </div>
 
         <div class="form-group">
           <label class="form-control-label" jhiTranslate="gestionEasyApp.produit.image" for="field_image">Image</label>
-          <input type="text" class="form-control" name="image" id="field_image" data-cy="image" formControlName="image" />
+          <div>
+            <img
+              [src]="'data:' + editForm.get('imageContentType')!.value + ';base64,' + editForm.get('image')!.value"
+              style="max-height: 100px"
+              *ngIf="editForm.get('image')!.value"
+              alt="produit image"
+            />
+            <div *ngIf="editForm.get('image')!.value" class="form-text text-danger clearfix">
+              <span class="pull-left">{{ editForm.get('imageContentType')!.value }}, {{ byteSize(editForm.get('image')!.value) }}</span>
+              <button
+                type="button"
+                (click)="clearInputImage('image', 'imageContentType', 'file_image')"
+                class="btn btn-secondary btn-xs pull-right"
+              >
+                <fa-icon icon="times"></fa-icon>
+              </button>
+            </div>
+            <input
+              type="file"
+              id="file_image"
+              data-cy="image"
+              (change)="setFileData($event, 'image', true)"
+              accept="image/*"
+              jhiTranslate="entity.action.addimage"
+            />
+          </div>
+          <input type="hidden" class="form-control" name="image" id="field_image" data-cy="image" formControlName="image" />
+          <input
+            type="hidden"
+            class="form-control"
+            name="imageContentType"
+            id="field_imageContentType"
+            formControlName="imageContentType"
+          />
         </div>
 
         <div class="form-group">
-          <label class="form-control-label" jhiTranslate="gestionEasyApp.produit.dateExpiration" for="field_dateExpiration"
-            >Date Expiration</label
-          >
+          <label class="form-control-label" jhiTranslate="gestionEasyApp.produit.date" for="field_date">Date</label>
           <div class="d-flex">
             <input
-              id="field_dateExpiration"
-              data-cy="dateExpiration"
+              id="field_date"
+              data-cy="date"
               type="datetime-local"
               class="form-control"
-              name="dateExpiration"
-              formControlName="dateExpiration"
+              name="date"
+              formControlName="date"
               placeholder="YYYY-MM-DD HH:mm"
             />
           </div>
+        </div>
+
+        <div class="form-group">
+          <label class="form-control-label" jhiTranslate="gestionEasyApp.produit.fournisseur" for="field_fournisseur">Fournisseur</label>
+          <select class="form-control" id="field_fournisseur" data-cy="fournisseur" name="fournisseur" formControlName="fournisseur">
+            <option [ngValue]="null"></option>
+            <option
+              [ngValue]="
+                fournisseurOption.id === editForm.get('fournisseur')!.value?.id ? editForm.get('fournisseur')!.value : fournisseurOption
+              "
+              *ngFor="let fournisseurOption of fournisseursSharedCollection; trackBy: trackFournisseurById"
+            >
+              {{ fournisseurOption.id }}
+            </option>
+          </select>
+        </div>
+
+        <div class="form-group">
+          <label class="form-control-label" jhiTranslate="gestionEasyApp.produit.sortie" for="field_sortie">Sortie</label>
+          <select class="form-control" id="field_sortie" data-cy="sortie" name="sortie" formControlName="sortie">
+            <option [ngValue]="null"></option>
+            <option
+              [ngValue]="sortieOption.id === editForm.get('sortie')!.value?.id ? editForm.get('sortie')!.value : sortieOption"
+              *ngFor="let sortieOption of sortiesSharedCollection; trackBy: trackSortieById"
+            >
+              {{ sortieOption.id }}
+            </option>
+          </select>
         </div>
       </div>
 

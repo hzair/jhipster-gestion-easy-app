@@ -54,9 +54,15 @@
       "JobHistory",
       "Produit",
       "Imputation",
-      "Employee2"
+      "Employee2",
+      "Vendeur",
+      "Fournisseur",
+      "Client",
+      "Camion",
+      "Sortie",
+      "Credit"
     ],
-    "lastLiquibaseTimestamp": 1642863494000
+    "lastLiquibaseTimestamp": 1642940059000
   },
   "git-provider": "GitHub",
   "git-company": "hzair",

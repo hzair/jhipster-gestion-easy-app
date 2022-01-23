@@ -59,6 +59,36 @@ import { RouterModule } from '@angular/router';
         data: { pageTitle: 'gestionEasyApp.employee2.home.title' },
         loadChildren: () => import('./employee-2/employee-2.module').then(m => m.Employee2Module),
       },
+      {
+        path: 'vendeur',
+        data: { pageTitle: 'gestionEasyApp.vendeur.home.title' },
+        loadChildren: () => import('./vendeur/vendeur.module').then(m => m.VendeurModule),
+      },
+      {
+        path: 'fournisseur',
+        data: { pageTitle: 'gestionEasyApp.fournisseur.home.title' },
+        loadChildren: () => import('./fournisseur/fournisseur.module').then(m => m.FournisseurModule),
+      },
+      {
+        path: 'client',
+        data: { pageTitle: 'gestionEasyApp.client.home.title' },
+        loadChildren: () => import('./client/client.module').then(m => m.ClientModule),
+      },
+      {
+        path: 'camion',
+        data: { pageTitle: 'gestionEasyApp.camion.home.title' },
+        loadChildren: () => import('./camion/camion.module').then(m => m.CamionModule),
+      },
+      {
+        path: 'sortie',
+        data: { pageTitle: 'gestionEasyApp.sortie.home.title' },
+        loadChildren: () => import('./sortie/sortie.module').then(m => m.SortieModule),
+      },
+      {
+        path: 'credit',
+        data: { pageTitle: 'gestionEasyApp.credit.home.title' },
+        loadChildren: () => import('./credit/credit.module').then(m => m.CreditModule),
+      },
       /* jhipster-needle-add-entity-route - JHipster will add entity modules routes here */
     ]),
   ],

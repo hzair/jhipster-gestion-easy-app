@@ -1,0 +1,84 @@
+<div>
+  <h2 id="page-heading" data-cy="CreditHeading">
+    <span jhiTranslate="gestionEasyApp.credit.home.title">Credits</span>
+
+    <div class="d-flex justify-content-end">
+      <button class="btn btn-info mr-2" (click)="loadAll()" [disabled]="isLoading">
+        <fa-icon icon="sync" [spin]="isLoading"></fa-icon>
+        <span jhiTranslate="gestionEasyApp.credit.home.refreshListLabel">Refresh List</span>
+      </button>
+
+      <button
+        id="jh-create-entity"
+        data-cy="entityCreateButton"
+        class="btn btn-primary jh-create-entity create-credit"
+        [routerLink]="['/credit/new']"
+      >
+        <fa-icon icon="plus"></fa-icon>
+        <span jhiTranslate="gestionEasyApp.credit.home.createLabel"> Create a new Credit </span>
+      </button>
+    </div>
+  </h2>
+
+  <jhi-alert-error></jhi-alert-error>
+
+  <jhi-alert></jhi-alert>
+
+  <div class="alert alert-warning" id="no-result" *ngIf="credits?.length === 0">
+    <span jhiTranslate="gestionEasyApp.credit.home.notFound">No credits found</span>
+  </div>
+
+  <div class="table-responsive" id="entities" *ngIf="credits && credits.length > 0">
+    <table class="table table-striped" aria-describedby="page-heading">
+      <thead>
+        <tr>
+          <th scope="col"><span jhiTranslate="global.field.id">ID</span></th>
+          <th scope="col"><span jhiTranslate="gestionEasyApp.credit.montant">Montant</span></th>
+          <th scope="col"><span jhiTranslate="gestionEasyApp.credit.designation">Designation</span></th>
+          <th scope="col"><span jhiTranslate="gestionEasyApp.credit.date">Date</span></th>
+          <th scope="col"><span jhiTranslate="gestionEasyApp.credit.vendeur">Vendeur</span></th>
+          <th scope="col"><span jhiTranslate="gestionEasyApp.credit.client">Client</span></th>
+          <th scope="col"></th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let credit of credits; trackBy: trackId" data-cy="entityTable">
+          <td>
+            <a [routerLink]="['/credit', credit.id, 'view']">{{ credit.id }}</a>
+          </td>
+          <td>{{ credit.montant }}</td>
+          <td>{{ credit.designation }}</td>
+          <td>{{ credit.date | formatMediumDatetime }}</td>
+          <td>
+            <div *ngIf="credit.vendeur">
+              <a [routerLink]="['/vendeur', credit.vendeur?.id, 'view']">{{ credit.vendeur?.id }}</a>
+            </div>
+          </td>
+          <td>
+            <div *ngIf="credit.client">
+              <a [routerLink]="['/client', credit.client?.id, 'view']">{{ credit.client?.id }}</a>
+            </div>
+          </td>
+          <td class="text-right">
+            <div class="btn-group">
+              <button type="submit" [routerLink]="['/credit', credit.id, 'view']" class="btn btn-info btn-sm" data-cy="entityDetailsButton">
+                <fa-icon icon="eye"></fa-icon>
+                <span class="d-none d-md-inline" jhiTranslate="entity.action.view">View</span>
+              </button>
+
+              <button type="submit" [routerLink]="['/credit', credit.id, 'edit']" class="btn btn-primary btn-sm" data-cy="entityEditButton">
+                <fa-icon icon="pencil-alt"></fa-icon>
+                <span class="d-none d-md-inline" jhiTranslate="entity.action.edit">Edit</span>
+              </button>
+
+              <button type="submit" (click)="delete(credit)" class="btn btn-danger btn-sm" data-cy="entityDeleteButton">
+                <fa-icon icon="times"></fa-icon>
+                <span class="d-none d-md-inline" jhiTranslate="entity.action.delete">Delete</span>
+              </button>
+            </div>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
